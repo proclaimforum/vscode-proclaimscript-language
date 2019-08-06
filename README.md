@@ -1,4 +1,4 @@
-# proclaim-script-vscode
+# vscode-proclaimscript-language
 Proclaim Script VSCode Language Extension
 
 A Visual Studio Code Language Extension
