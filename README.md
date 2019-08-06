@@ -8,18 +8,35 @@ Including Syntax Highlighter, snippets autocompletion and other VSCode Intellise
 
 (C) Copyright Burnside Consulting Ltd 2019
 
-August 2019 - first commit - Syntax Highlighter basics.
-# Features 
-basic syntax highlighting at present. Future: code folding and proper indentation support for IF ELSE structures
-code snippets using samples from ProclaimForum.co.uk (TODO)
-inline documentation (TODO) based on samples from ProclaimForum.co.uk 
+## Features
 
+* Basic syntax highlighting at present. Future: code folding and proper indentation support for IF ELSE structures
+* Code snippets using samples from ProclaimForum.co.uk (TODO)
+* inline documentation (TODO) based on samples from ProclaimForum.co.uk 
 
-# Install Guide
+## Installation
 Create a directory  %userprofile%/.vscode/extensions/proclaimscript
 Copy contents of this repository into it, restart VSCode
 Create a blank file, and save it with extension .pro (or load one previously saved from Proclaim Maths editor).
 
+## Requirements
 
-# Contributing
+VS Code version 
+
+## Extension Settings
+
+no specific settings at this time
+
+## Known Issues
+
+* overlap of IF ELSE autocompletion with C/C++ makes writing IF ELSE blocks a little clunky
+
+## Release Notes
+
+### 1.0.0 
+
+7/8/2019 first release - syntax highlighter basics working, plus sample snippet.
+
+
+## Contributing
 Pull requests welcomed
