@@ -1,0 +1,17 @@
+{
+    "IF ELSEIF ELSE END": {
+        "prefix": [
+            "IF"
+          ],
+          "body": [
+            "IF ${1:condition} THEN ",
+            "\t# DO THIS IF TRUE ",
+            "ELSEIF ${2:condition} THEN",
+            "\t#(OPTIONAL ELSEIF)",
+            "ELSE",
+            "\t# Do this if all above are false",
+            "END"
+          ],
+          "description": "An IF ELSE example."
+      }
+    }

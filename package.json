@@ -1,0 +1,31 @@
+{
+    "name": "proclaimscript",
+    "displayName": "Proclaim Script",
+    "description": "Syntax highlighting for Eclipse Proclaim script",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.36.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "pro",
+            "aliases": ["Proclaim Script", "pro"],
+            "extensions": [".pro"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "pro",
+            "scopeName": "source.pro",
+            "path": "./syntaxes/pro.tmLanguage.json"
+        }],
+        "snippets": [
+            {
+              "language": "javascript",
+              "path": "./snippets.json"
+            }
+          ]
+    }
+}
