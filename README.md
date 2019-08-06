@@ -21,15 +21,15 @@ Create a blank file, and save it with extension .pro (or load one previously sav
 
 ## Requirements
 
-VS Code version 
+Written on VS Code version 1.36.1 Node.js 10.11.0
 
 ## Extension Settings
 
-no specific settings at this time
+No specific settings at this time
 
 ## Known Issues
 
-* overlap of IF ELSE autocompletion with C/C++ makes writing IF ELSE blocks a little clunky
+* Overlap of IF ELSE autocompletion with C/C++ makes writing IF ELSE blocks a little clunky
 
 ## Release Notes
 
