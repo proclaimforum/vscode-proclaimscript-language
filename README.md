@@ -28,8 +28,9 @@ No specific settings at this time
 
 ## Known Issues
 
-* Overlap of IF ELSE autocompletion with C/C++ makes writing IF ELSE blocks a little clunky
-* numeric characters inside variable names are not correctly colour coded. (the aim is to emphasise which strings Proclaim will interpret as a variable name)
+* Numeric characters inside variable names are not correctly colour coded. (the aim is to emphasise which strings Proclaim will interpret as a variable name)
+* IF ELSE autocompletion competition with C/C++ makes writing IF ELSE blocks a little clunky
+* autocomplete / folding of IF ELSE is case sensitive.
 
 ## Release Notes
 
