@@ -1,5 +1,4 @@
-# vscode-proclaimscript-language
-Proclaim Script VSCode Language Extension
+#Proclaim Maths Script VSCode Language Extension
 
 A Visual Studio Code Language Extension
 for Eclipse Proclaim Maths Script
@@ -14,6 +13,11 @@ for Eclipse Proclaim Maths Script
 
 
 ## Installation
+
+This extension is available on the Visual Studio Code Marketplace.
+Search for "Proclaim Maths"
+
+To install a development version directly from the GIT respository files:
 1. Create a directory  %userprofile%/.vscode/extensions/proclaimscript
 2. Copy contents of this repository into it, restart VSCode
 3. Create a blank file, and save it with extension .pro (or load one previously saved from Proclaim Maths editor). The syntax highlighter will then recognise and parse the code.
