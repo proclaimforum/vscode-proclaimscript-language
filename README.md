@@ -1,4 +1,4 @@
-#Proclaim Maths Script VSCode Language Extension
+# Proclaim Maths Script VSCode Language Extension
 
 A Visual Studio Code Language Extension
 for Eclipse Proclaim Maths Script
