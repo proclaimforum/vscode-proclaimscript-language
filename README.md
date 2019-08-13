@@ -10,14 +10,15 @@ Including Syntax Highlighter, snippets autocompletion and other VSCode Intellise
 
 ## Features
 
-* Basic syntax highlighting at present. Future: code folding and proper indentation support for IF ELSE structures
+* Syntax highlighting. 
+* IF THEN ELSE code folding
 * Code snippets using samples from ProclaimForum.co.uk (TODO)
 * inline documentation (TODO) based on samples from ProclaimForum.co.uk 
 
 ## Installation
-Create a directory  %userprofile%/.vscode/extensions/proclaimscript
-Copy contents of this repository into it, restart VSCode
-Create a blank file, and save it with extension .pro (or load one previously saved from Proclaim Maths editor).
+1. Create a directory  %userprofile%/.vscode/extensions/proclaimscript
+2. Copy contents of this repository into it, restart VSCode
+3. Create a blank file, and save it with extension .pro (or load one previously saved from Proclaim Maths editor). The syntax highlighter will then recognise and parse the code.
 
 ## Requirements
 
@@ -30,6 +31,12 @@ No specific settings at this time
 ## Known Issues
 
 * Overlap of IF ELSE autocompletion with C/C++ makes writing IF ELSE blocks a little clunky
+
+## TODO
+* Code folding for WHILE DO loop structures
+* theme/colouring to match Proclaim editor when VSCode theme is white background
+* more snippets for sample keywords, much like the Proclaim Maths Editor dropdown
+* Intellisense / autocomplete for inline help for keywords
 
 ## Release Notes
 
