@@ -29,7 +29,7 @@ No specific settings at this time
 ## Known Issues
 
 * Overlap of IF ELSE autocompletion with C/C++ makes writing IF ELSE blocks a little clunky
-* arithmetic symbols as part of variable names are not correctly colour coded. (the aim is to emphasise which characters Proclaim will interpret as a variable name)
+* numeric characters inside variable names are not correctly colour coded. (the aim is to emphasise which strings Proclaim will interpret as a variable name)
 
 ## Release Notes
 
