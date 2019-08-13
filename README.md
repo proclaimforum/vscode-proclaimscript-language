@@ -28,7 +28,7 @@ Written on VS Code version 1.36.0 Node.js 10.11.0
 
 ## Extension Settings
 
-No specific settings at this time
+No specific settings at this time.
 
 ## Known Issues
 
