@@ -4,10 +4,7 @@ Proclaim Script VSCode Language Extension
 A Visual Studio Code Language Extension
 for Eclipse Proclaim Maths Script
 
-Including Syntax Highlighter, snippets autocompletion and other VSCode Intellisense objects
-
 (C)  Burnside Consulting Ltd 2019
-
 
 ## Features
 
