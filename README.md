@@ -38,7 +38,7 @@ No specific settings at this time.
 
 ## Release Notes
 
-### 0.1.0 
+### 0.1.1 
 10/08/2019 first release - syntax highlighter, some code folding and indentation basics working, plus sample snippet.
 
 ## TODO
