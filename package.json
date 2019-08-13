@@ -1,8 +1,16 @@
 {
     "name": "proclaimscript",
-    "displayName": "Proclaim Script",
-    "description": "Syntax highlighting for Eclipse Proclaim script",
-    "version": "0.0.1",
+    "displayName": "Proclaim Maths Script",
+    "description": "Syntax highlighting for Eclipse Proclaim Maths script",
+    "version": "0.1.0",
+    "publisher": "BurnsideConsultingLtd",
+    "repository": {
+		"type": "git",
+		"url": "https://github.com/proclaimforum/vscode-proclaimscript-language.git"
+    },
+    "bugs": {
+		"url": "https://github.com/proclaimforum/vscode-proclaimscript-language/issues"
+	},
     "engines": {
         "vscode": "^1.36.0"
     },
@@ -12,7 +20,7 @@
     "contributes": {
         "languages": [{
             "id": "pro",
-            "aliases": ["Proclaim Script", "pro"],
+            "aliases": ["Proclaim Maths Script", "pro"],
             "extensions": [".pro"],
             "configuration": "./language-configuration.json"
         }],
@@ -23,7 +31,7 @@
         }],
         "snippets": [
             {
-              "language": "javascript",
+              "language": "pro",
               "path": "./snippets.json"
             }
           ]
