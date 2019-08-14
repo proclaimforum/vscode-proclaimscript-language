@@ -251,5 +251,86 @@
         "CLEAR-GLOBAL-VARIABLE( ${1:USERNAME} )"
     ],
     "description": "Clears the global variables. You require the username, Mostly commonly USERNAME (The user that is currently logged in)"
-  }
+  },
+
+  "DATE": {
+    "prefix": [
+      "DATE"
+    ],
+    "body": [
+        "DATE( ${1:dd} , ${2:mm} , ${3:yyyy})"
+    ],
+    "description": "converts three integer values for day, month and year into a date field"
+  },
+
+  "CDATE": {
+    "prefix": [
+      "CDATE"
+    ],
+    "body": [
+        "CDATE( ${1:Date Field} )"
+    ],
+    "description": "converts a character representation of a date into a date field. \n If entering a date as a fixed value, ensure this is enclosed in speech marks \n (eg – result = CDATE (\"01/05/2015\")"
+  },
+
+
+  "DAY": {
+    "prefix": [
+      "DAY"
+    ],
+    "body": [
+        "DAY( ${1:Date Field} )"
+    ],
+    "description": "returns the DAY part of a date"
+  },
+
+  "MONTH": {
+    "prefix": [
+      "MONTH"
+    ],
+    "body": [
+        "MONTH( ${1:Date Field} )"
+    ],
+    "description": "returns the MONTH part of a date"
+  },  
+  
+  "YEAR": {
+    "prefix": [
+      "YEAR"
+    ],
+    "body": [
+        "YEAR( ${1:Date Field} )"
+    ],
+    "description": "returns the YEAR part of a date"
+  }, 
+
+  "WEEKDAY": {
+    "prefix": [
+      "WEEKDAY"
+    ],
+    "body": [
+        "${1:Local variable} =  WEEKDAY( ${2:Date Field} )"
+    ],
+    "description": "returns the name of the day occurring on the date entered"
+  }, 
+
+  "DAYS-FROM-TODAY": {
+    "prefix": [
+      "DAYS-FROM-TODAY"
+    ],
+    "body": [
+        "${1:Local variable} =  DAYS-FROM-TODAY( ${2:Date Field} )"
+    ],
+    "description": "returns the number of days to the date entered from today"
+  }, 
+
+  "DATE-FROM-TODAY": {
+    "prefix": [
+      "DATE-FROM-TODAY"
+    ],
+    "body": [
+        "${1:Local variable} =  DATE-FROM-TODAY( ${2:Field or Number} )"
+    ],
+    "description": "returns the date of the days entered from today. Can be + or a -"
+  } 
 }
