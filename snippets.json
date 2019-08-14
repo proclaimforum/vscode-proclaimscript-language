@@ -86,7 +86,97 @@
     ],
     "description": "Counts the amount of rows and put it into a variable."
   },
-  
+
+  "TABLEFIRST": {
+    "prefix": [
+      "TABLEFIRST"
+    ],
+    "body": [
+          "TABLEFIRST( ${1:TableField} )"
+    ],
+    "description": "Gets the first table entry"
+  },
+
+  "TABLEGETCURRENT": {
+    "prefix": [
+      "TABLEGETCURRENT"
+    ],
+    "body": [
+          "${1:Local Variable Name} = TABLEGETCURRENT( ${2:TableField} )"
+    ],
+    "description": "Gets the current entry in the table"
+  },
+
+  "TABLELAST": {
+    "prefix": [
+      "TABLELAST"
+    ],
+    "body": [
+          "TABLELAST( ${1:TableField} )"
+    ],
+    "description": "Gets the last table entry"
+  },
+
+  "TABLENEXT": {
+    "prefix": [
+      "TABLENEXT"
+    ],
+    "body": [
+          "TABLENEXT( ${1:TableField} )"
+    ],
+    "description": "Gets the next table entry"
+  },
+
+  "TABLEPREVIOUS": {
+    "prefix": [
+      "TABLEPREVIOUS"
+    ],
+    "body": [
+          "TABLEPREVIOUS( ${1:TableField} )"
+    ],
+    "description": "Gets the previous table entry"
+  }, 
+
+  "TABLEREFESHALL": {
+    "prefix": [
+      "TABLEREFESHALL"
+    ],
+    "body": [
+          "TABLEREFESHALL( ${1:TableField} )"
+    ],
+    "description": "Used to refresh all entries in the table when viewed on screen"
+  }, 
+
+  "TABLEREFESHCURRENT": {
+    "prefix": [
+      "TABLEREFESHCURRENT"
+    ],
+    "body": [
+          "TABLEREFESHCURRENT( ${1:TableField} )"
+    ],
+    "description": "Used to refresh all current row in the table"
+  }, 
+
+  "TABLEREFESHSELECTED": {
+    "prefix": [
+      "TABLEREFESHSELECTED"
+    ],
+    "body": [
+          "TABLEREFESHSELECTED( ${1:TableField} )"
+    ],
+    "description": "Used to refresh the view of the table, to show only selected rows following a TableSelect command"
+  }, 
+
+  "TABLERESET": {
+    "prefix": [
+      "TABLERESET"
+    ],
+    "body": [
+          "TABLEREFESHSELECTED( ${1:TableField} )"
+    ],
+    "description": "Used to reset the table view after a TableSelect has been used to undo any filters on the table"
+  },
+ 
   "TEXT": {
     "prefix": [
         "TEXT"
