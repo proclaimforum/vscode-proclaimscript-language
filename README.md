@@ -37,26 +37,25 @@ No specific settings at this time.
 * autocomplete / folding of IF ELSE is case sensitive.
 
 ## Release Notes
+
 See CHANGELOG.md for recent changes, or Git repository for more detail
-
-### 0.1.1 
-10/08/2019 first release 
-
-
+First release 0.1.1 on 13/08/2019
 
 ## TODO
-* Code folding for WHILE DO loop structures
+
 * theme/colouring to match Proclaim editor when VSCode theme is white background
 * more snippets for sample keywords, based on Example Maths from ProclaimForum.co.uk
 * Intellisense / autocomplete for inline help for keywords
 
-
 ## Contributing
+
 Pull requests welcomed
 
 ### Developer Hints:
+
 * Syntax highlighting rules are defined in pro.tmlLanguage.json
 * Indentation rules are defined in language-configuration.json
+* Snippets (sample code/Intellisense) stored in snippets.json
 * In Proclaim v3.4+, the definition of the built-in syntax highlighter (CodeJock Syntax Edit) is stored in ConfigEditor/Schemas/_Proclaim.schclass
 * To see how the extension has parsed a specific line/keywork, go View-->Command Palette.. Developer: Inspect TM Scopes
 * For contributing/making changes to the extension, instead of 'installing' the script into your extensions directory try running the extension in the VSCode Extension Development Host 
