@@ -37,9 +37,12 @@ No specific settings at this time.
 * autocomplete / folding of IF ELSE is case sensitive.
 
 ## Release Notes
+See CHANGELOG.md for recent changes, or Git repository for more detail
 
 ### 0.1.1 
-10/08/2019 first release - syntax highlighter, some code folding and indentation basics working, plus sample snippet.
+10/08/2019 first release 
+
+
 
 ## TODO
 * Code folding for WHILE DO loop structures
