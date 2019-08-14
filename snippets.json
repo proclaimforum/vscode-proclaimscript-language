@@ -131,5 +131,35 @@
           "PUT( ${1:Value} , ${2:FieldName} )"
       ],
       "description": "PUT commands moves whatever the first argument is into a database field"
-  }  
+  },
+
+  "GLOBAL-VARIABLE": {
+    "prefix": [
+      "GLOBAL-VARIABLE"
+    ],
+    "body": [
+        "${1:Local Variable Name} = GLOBAL-VARIABLE( \"${2:Global Variable Name}\" ) "
+    ],
+    "description": "Gets a global variable, Pair this with SET-GLOBAL-VARIABLE"
+  }, 
+
+  "SET-GLOBAL-VARIABLE": {
+    "prefix": [
+      "SET-GLOBAL-VARIABLE"
+    ],
+    "body": [
+        " SET-GLOBAL-VARIABLE( \"${1:Global Variable Name}\" , \"${2:Value}\" ) "
+    ],
+    "description": "Sets a Global Variable. When using this fuction make sure you use a CLEAR-GLOBAL-VARIBALE"
+  },
+
+  "CLEAR-GLOBAL-VARIABLE": {
+    "prefix": [
+      "CLEAR-GLOBAL-VARIABLE"
+    ],
+    "body": [
+        "CLEAR-GLOBAL-VARIABLE( ${1:USERNAME} )"
+    ],
+    "description": "Clears the global variables. You require the username, Mostly commonly USERNAME (The user that is currently logged in)"
+  }
 }
