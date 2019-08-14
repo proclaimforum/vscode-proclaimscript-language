@@ -1,17 +1,135 @@
 {
-    "IF ELSEIF ELSE END": {
-        "prefix": [
-            "IF"
-          ],
-          "body": [
-            "IF ${1:condition} THEN ",
-            "\t# DO THIS IF TRUE ",
-            "ELSEIF ${2:condition} THEN",
-            "\t#(OPTIONAL ELSEIF)",
-            "ELSE",
-            "\t# Do this if all above are false",
-            "END"
-          ],
-          "description": "An IF ELSE example."
-      }
-    }
+  "IF ELSEIF ELSE END": {
+      "prefix": [
+          "IF ELSEIF ELSE END"
+        ],
+        "body": [
+          "IF ${1:condition} THEN ",
+          "\t# DO THIS IF TRUE ",
+          "ELSEIF ${2:condition} THEN",
+          "\t#(OPTIONAL ELSEIF)",
+          "ELSE",
+          "\t# Do this if all above are false",
+          "END"
+        ],
+        "description": "An IF ELSEIF ELSE"
+    },
+    
+  "WHILE DO END": {
+      "prefix": [
+        "WHILE"
+      ],
+      "body": [
+          "WHILE ${1:condition} DO ",
+          "\t #Contents of the LOOP",
+          "END"
+      ],
+      "description": "Create a Loop"
+    },
+
+  "TABLECREATE": {
+    "prefix": [
+      "TABLECREATE"
+    ],
+    "body": [
+          "TABLECREATE( ${1:TableField} )"
+    ],
+    "description": "Creates an entry on a table."
+  },
+
+  "TABLEAMEND": {
+    "prefix": [
+      "TABLEAMEND"
+    ],
+    "body": [
+          "TABLEAMEND( ${1:TableField} )"
+    ],
+    "description": "Amends an entry on a table."
+  },
+
+  "TABLESAVE": {
+    "prefix": [
+      "TABLESAVE"
+    ],
+    "body": [
+          "TABLESAVE( ${1:TableField} )"
+    ],
+    "description": "Saves an entry on a table."
+  },
+
+  "TABLEDELETE": {
+    "prefix": [
+      "TABLEDELETE"
+    ],
+    "body": [
+          "TABLEDELETE( ${1:TableField} )"
+    ],
+    "description": "Deletes an entry on a table."
+  },   
+
+  "TABLECANCEL": {
+    "prefix": [
+      "TABLECANCEL"
+    ],
+    "body": [
+          "TABLECANCEL( ${1:TableField} )"
+    ],
+    "description": "Cancels an entry on a table."
+  },
+
+  "TABLECOUNT": {
+    "prefix": [
+      "TABLECOUNT"
+    ],
+    "body": [
+          "v-TableCount = TABLECOUNT( ${1:TableField} )"
+    ],
+    "description": "Counts the amount of rows and put it into a variable."
+  },
+  
+  "TEXT": {
+    "prefix": [
+        "TEXT"
+    ],
+    "body": [
+      "TEXT( ${1:TextToConvert} )"
+    ],
+    "description": [
+        "Converts another format into a string."
+    ]
+  },
+
+  "QUESTION": {
+    "prefix": [
+      "QUESTION"
+    ],
+    "body": [
+      "QUESTION( ${1:Question Text} , ${2:Type of Question} )"
+    ],
+    "description": [
+        "Displays a Question to the user, The return is either return-value or return-state"
+      ]   
+},
+
+  "MESSAGE": {
+    "prefix": [
+          "MESSAGE"
+    ],
+    "body": [
+        "MESSAGE( ${1:String} )"
+    ],
+    "description": [
+        "Displays a pop-up of the string: Useful for debugging"
+    ]
+  },
+
+  "PUT": {
+      "prefix": [
+        "PUT"
+      ],
+      "body": [
+          "PUT( ${1:Value} , ${2:FieldName} )"
+      ],
+      "description": "PUT commands moves whatever the first argument is into a database field"
+  }  
+}
