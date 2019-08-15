@@ -1,4 +1,4 @@
-{
+  {
   "IF ELSEIF ELSE END": {
       "prefix": [
           "IF ELSEIF ELSE END"
@@ -244,11 +244,11 @@
     ],
     "body": [
       "QUESTION( ${1:Question Text} , ${2:Type of Question} )",
-      "IF RETURN-STATE = "CANCEL" THEN",
+      "IF RETURN-STATE = \"CANCEL\" THEN",
       "\t # User pressed Cancel - do something",
       "ELSE",
       "\t #User pressed OK - the variable RETURN-VALUE contains the user's input",
-      "\t MESSAGE ("You entered: ", RETURN-VALUE)",
+      "\t MESSAGE (\"You entered: \", RETURN-VALUE)",
       "END"
     ],
     "description": [
