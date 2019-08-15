@@ -12,3 +12,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ## [0.1.2] - 2019-08-14
 ### Added
 - more snippets from Git - WHILE loops, TABLE commands and PUT etc. 
+
+## [0.1.3] - 2019-08-14
+### Added
+- more snippets from Git - STATUS/OPEN/CLOSE etc, including best practice example of updating linked file
