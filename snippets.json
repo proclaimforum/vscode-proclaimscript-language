@@ -332,5 +332,49 @@
         "${1:Local variable} =  DATE-FROM-TODAY( ${2:Field or Number} )"
     ],
     "description": "returns the date of the days entered from today. Can be + or a -"
-  } 
+  },
+
+  "CREATE": {
+    "prefix": [
+      "CREATE"
+    ],
+    "body": [
+        "CREATE( ${1:<Case Number>} , ${2:Database Number} )"
+    ],
+    "description": "create a new case"
+  },
+
+  "OPEN": {
+    "prefix": [
+      "OPEN"
+    ],
+    "body": [
+        "OPEN( ${1:<Case Number>} , \"LOCK\" )"
+    ],
+    "description": "open a new case for observation or editing"
+  }, 
+
+  "UPDATE": {
+    "prefix": [
+      "UPDATE"
+    ],
+    "body": [
+        "UPDATE( ${1:<Case Number>} , \"\" )"
+    ],
+    "description": "update the database with current changes"
+  }, 
+
+  "UPDATE UNLOCK": {
+    "prefix": [
+      "UPDATE"
+    ],
+    "body": [
+        "UPDATE( ${1:<Case Number>} , \"UNLOCK\" )"
+    ],
+    "description": "unlock/save an open case"
+  }
+
+
+
+
 }
