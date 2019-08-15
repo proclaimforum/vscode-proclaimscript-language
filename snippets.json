@@ -189,6 +189,55 @@
     ]
   },
 
+  "LENGTH": {
+    "prefix": [
+        "LENGTH"
+    ],
+    "body": [
+      "LENGTH( ${1:field or Text} )"
+    ],
+    "description": [
+        "returns the length of the text"
+    ]
+  },
+
+  "SPLIT": {
+    "prefix": [
+        "SPLIT"
+    ],
+    "body": [
+      "SPLIT( ${1:field or Text} , ${2:Start} , ${3:Length} )"
+    ],
+    "description": [
+        "extract some or all characters from a text item \n {field} is the text from which the characters are to be extracted \n <start> is the start position for the extraction \n <length> is the number of characters to be extracted \n e.g. SPLIT( “This is a test” , 6 , 4 ) = “is a” "
+    ]
+  },  
+
+  "ASC": {
+    "prefix": [
+        "ASC"
+    ],
+    "body": [
+      "ASC( ${1:Single Character} )"
+    ],
+    "description": [
+        "returns the ASCII value of the character supplied \n e.g. result = ASC(“A”) : result will be 65"
+    ]
+  },
+
+  "CHR": {
+    "prefix": [
+        "CHR"
+    ],
+    "body": [
+      "CHR( ${1:ASCII Number} )"
+    ],
+    "description": [
+        "returns the ASCII character value from 32 to 255"
+    ]
+  },
+
+
   "QUESTION": {
     "prefix": [
       "QUESTION"
@@ -332,5 +381,66 @@
         "${1:Local variable} =  DATE-FROM-TODAY( ${2:Field or Number} )"
     ],
     "description": "returns the date of the days entered from today. Can be + or a -"
-  } 
+  },
+
+  "CREATE": {
+    "prefix": [
+      "CREATE"
+    ],
+    "body": [
+        "CREATE( ${1:<Case Number>} , ${2:Database Number} )"
+    ],
+    "description": "create a new case"
+  },
+
+  "OPEN": {
+    "prefix": [
+      "OPEN"
+    ],
+    "body": [
+        "OPEN( ${1:<Case Number>} , \"LOCK\" )"
+    ],
+    "description": "open a new case for observation or editing"
+  }, 
+
+  "UPDATE": {
+    "prefix": [
+      "UPDATE"
+    ],
+    "body": [
+        "UPDATE( ${1:<Case Number>} , \"\" )"
+    ],
+    "description": "update the database with current changes"
+  }, 
+
+  "UPDATE UNLOCK": {
+    "prefix": [
+      "UPDATE"
+    ],
+    "body": [
+        "UPDATE( ${1:<Case Number>} , \"UNLOCK\" )"
+    ],
+    "description": "unlock/save an open case"
+  },
+
+  "CLOSE": {
+    "prefix": [
+      "CLOSE"
+    ],
+    "body": [
+        "CLOSE( ${1:<Case Number>} )"
+    ],
+    "description": "close the case (E.G when finished after create or open)"
+  },
+
+  "STATUS": {
+    "prefix": [
+      "STATUS"
+    ],
+    "body": [
+        "STATUS( ${1:<Case Number>} )"
+    ],
+    "description": "use this function to check the status of a case \n RETURN-VALUE = “available” / “does not exist” / name of user who has the case locked"
+  }
+
 }
