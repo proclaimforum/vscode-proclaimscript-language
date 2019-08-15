@@ -1,4 +1,4 @@
-  {
+{
   "IF ELSEIF ELSE END": {
       "prefix": [
           "IF ELSEIF ELSE END"
@@ -224,7 +224,6 @@
         "returns the ASCII value of the character supplied \n e.g. result = ASC(“A”) : result will be 65"
     ]
   },
-
   "CHR": {
     "prefix": [
         "CHR"
@@ -236,8 +235,7 @@
         "returns the ASCII character value from 32 to 255"
     ]
   },
-
-
+  
   "QUESTION": {
     "prefix": [
       "QUESTION"
@@ -462,5 +460,4 @@
     ],
     "description": "use this function to check the status of a case prior to updating it\n RETURN-VALUE = “available” / “does not exist” / name of user who has the case locked"
   }
-
 }
