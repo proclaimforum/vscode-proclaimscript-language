@@ -6,4 +6,9 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [Unreleased]
 
-- Initial release
+## [0.1.1] - 2019-08-13
+### Initial release
+
+## [0.1.2] - 2019-08014
+### Added
+- more snippets from Git - WHILE loops, TABLE commands and PUT etc. 

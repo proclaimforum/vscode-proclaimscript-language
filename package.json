@@ -2,15 +2,15 @@
     "name": "proclaimscript",
     "displayName": "Proclaim Maths Script",
     "description": "Syntax highlighting for Eclipse Proclaim Maths script",
-    "version": "0.1.0",
+    "version": "0.1.2",
     "publisher": "BurnsideConsultingLtd",
     "repository": {
-		"type": "git",
-		"url": "https://github.com/proclaimforum/vscode-proclaimscript-language.git"
+        "type": "git",
+        "url": "https://github.com/proclaimforum/vscode-proclaimscript-language.git"
     },
     "bugs": {
-		"url": "https://github.com/proclaimforum/vscode-proclaimscript-language/issues"
-	},
+        "url": "https://github.com/proclaimforum/vscode-proclaimscript-language/issues"
+    },
     "engines": {
         "vscode": "^1.36.0"
     },
@@ -18,22 +18,31 @@
         "Programming Languages"
     ],
     "contributes": {
-        "languages": [{
-            "id": "pro",
-            "aliases": ["Proclaim Maths Script", "pro"],
-            "extensions": [".pro"],
-            "configuration": "./language-configuration.json"
-        }],
-        "grammars": [{
-            "language": "pro",
-            "scopeName": "source.pro",
-            "path": "./syntaxes/pro.tmLanguage.json"
-        }],
+        "languages": [
+            {
+                "id": "pro",
+                "aliases": [
+                    "Proclaim Maths Script",
+                    "pro"
+                ],
+                "extensions": [
+                    ".pro"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "pro",
+                "scopeName": "source.pro",
+                "path": "./syntaxes/pro.tmLanguage.json"
+            }
+        ],
         "snippets": [
             {
-              "language": "pro",
-              "path": "./snippets.json"
+                "language": "pro",
+                "path": "./snippets.json"
             }
-          ]
+        ]
     }
 }
