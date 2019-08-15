@@ -9,6 +9,6 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ## [0.1.1] - 2019-08-13
 ### Initial release
 
-## [0.1.2] - 2019-08014
+## [0.1.2] - 2019-08-14
 ### Added
 - more snippets from Git - WHILE loops, TABLE commands and PUT etc. 
