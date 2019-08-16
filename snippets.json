@@ -449,7 +449,7 @@
       "\t PUT( ${1:<Case Number>}, ${2:<Links field.Link Case Ref>})",
       "\t OPEN(${1:<Case Number>},\"LOCK\")",
       "\t #We can now PUT values across to this case. Usually performed via linked fields",
-      "\t PUT(${3:<Some data>},${2:<Links field.Link Case Ref>})",
+      "\t PUT(${3:<Some data>},${3:<Linked case.Linked case field.Type>})",
       "\t #When done, update and release the case for other users",
       "\t UPDATE(${1:<Case Number>},\"UNLOCK\")",
       "ELSEIF RETURN-VALUE = \"does not exist\" THEN",
