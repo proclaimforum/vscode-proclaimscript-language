@@ -21,7 +21,7 @@
 			"include": "#numbers"
 		},
 		{
-			"include": "#symbols"
+			"include": "#operators"
 		}
 
 	],
@@ -164,7 +164,7 @@
 			]
 
 		},
-		"symbols": {
+		"operators": {
 			"patterns": [
 				{
 					"name": "keyword.operator.arithmetic.pro",
