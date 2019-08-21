@@ -159,19 +159,26 @@
 			"patterns": [
 				{
 					"name": "constant.numeric",
-					"match": "[0-9]"
+					"match": "\\s[0-9]"
 				}
 			]
 
 		},
 		"symbols": {
-			
-				"patterns": [
-					{
-						"name": "keyword.operator",
-						"match": "\\+-\\*/"
-					}
-				]
+			"patterns": [
+				{
+					"name": "keyword.operator.arithmetic.pro",
+					"match": "(\\s!|\\s\\+|\\s-|\\s/|\\s\\*|\\s%|\\s\\^|\\s&|\\s\\||\\s<<|\\s>>)"
+				},
+				{
+					"name": "keyword.operator.comparison.pro",
+					"match": "(<=|>=|<|>)"
+				},
+				{
+					"name": "keyword.operator.assignment.pro",
+					"match": "(\\+=|-=|/=|\\*=|%=|\\^=|&=|\\|=|<<=|>>=|=)"
+				}
+			]
 		}
 	},
 	"scopeName": "source.pro"
