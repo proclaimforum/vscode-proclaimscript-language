@@ -137,32 +137,32 @@
     "description": "Gets/selects the previous table entry"
   }, 
 
-  "TABLEREFESHALL": {
+  "TABLEREFRESHALL": {
     "prefix": [
-      "TABLEREFESHALL"
+      "TABLEREFRESHALL"
     ],
     "body": [
-          "TABLEREFESHALL( ${1:TableField} )"
+          "TABLEREFRESHALL( ${1:TableField} )"
     ],
     "description": "Used to refresh all entries in the table when viewed on screen"
   }, 
 
-  "TABLEREFESHCURRENT": {
+  "TABLEREFRESHCURRENT": {
     "prefix": [
-      "TABLEREFESHCURRENT"
+      "TABLEREFRESHCURRENT"
     ],
     "body": [
-          "TABLEREFESHCURRENT( ${1:TableField} )"
+          "TABLEREFRESHCURRENT( ${1:TableField} )"
     ],
     "description": "Used to refresh the current row in the table"
   }, 
 
-  "TABLEREFESHSELECTED": {
+  "TABLEREFRESHSELECTED": {
     "prefix": [
-      "TABLEREFESHSELECTED"
+      "TABLEREFRESHSELECTED"
     ],
     "body": [
-          "TABLEREFESHSELECTED( ${1:TableField} )"
+          "TABLEREFRESHSELECTED( ${1:TableField} )"
     ],
     "description": "Used to refresh the view of the table, to show only selected rows following a TableSelect command"
   }, 
