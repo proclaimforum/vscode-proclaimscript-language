@@ -20,3 +20,6 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ## [0.1.4] - 2019-08-22
 ### Fixed
 - variable highlighting where variable name contained numeric or arithmetic symbol
+
+## Branch LSP_TEST
+ - adding LSP framework for future expansion.
