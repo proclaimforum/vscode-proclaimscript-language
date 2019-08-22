@@ -9,8 +9,7 @@ for Eclipse Proclaim Maths Script
 
 * Syntax highlighting, including Proclaim Maths Keywords featured in versions up to 3.4.02
 * IF THEN ELSE code folding and indentation
-* Snippets framework for example maths layouts, plus sample snippet for IF ELSEIF ELSE END
-
+* Snippets framework for example maths layouts
 
 ## Installation
 
@@ -32,7 +31,6 @@ No specific settings at this time.
 
 ## Known Issues
 
-* Numeric characters inside variable names are not correctly colour coded. (the aim is to emphasise which strings Proclaim will interpret as a variable name)
 * IF ELSE autocompletion competition with C/C++ makes writing IF ELSE blocks a little clunky
 * autocomplete / folding of IF ELSE is case sensitive.
 
@@ -46,6 +44,7 @@ First release 0.1.1 on 13/08/2019
 * theme/colouring to match Proclaim editor when VSCode theme is white background
 * more snippets for sample keywords, based on Example Maths from ProclaimForum.co.uk
 * Intellisense / autocomplete for inline help for keywords
+* Define Document Symbols via VSCode API so that variable names, DB fields keywords etc show in the VSCode OUTLINE view
 
 ## Contributing
 

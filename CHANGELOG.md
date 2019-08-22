@@ -16,3 +16,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ## [0.1.3] - 2019-08-14
 ### Added
 - more snippets from Git - STATUS/OPEN/CLOSE etc, including best practice example of updating linked file
+
+## [0.1.4] - 2019-08-22
+### Fixed
+- variable highlighting where variable name contained numeric or arithmetic symbol
