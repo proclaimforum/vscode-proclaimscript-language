@@ -66,11 +66,12 @@
             }
         ],
         "snippets": [
-            {
-                "language": "pro",
-                "path": "./snippets.json"
-            }
-        ],
+			{
+				"language": "pro",
+				"path": "./snippets.json"
+			}
+		]
+    },
         "scripts": {
             "vscode:prepublish": "cd client && npm run update-vscode && cd .. && npm run compile",
             "compile": "tsc -b",
@@ -85,4 +86,4 @@
             "typescript": "^3.5.1"
         }
     }
-}
+

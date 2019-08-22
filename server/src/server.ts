@@ -142,7 +142,7 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
 				start: textDocument.positionAt(m.index),
 				end: textDocument.positionAt(m.index + m[0].length)
 			},
-			message: `${m[0]} is all uppercase!!!!.`,
+			message: `${m[0]} is all uppercase!!!.`,
 			source: 'ex'
 		};
 		if (hasDiagnosticRelatedInformationCapability) {
