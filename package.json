@@ -18,33 +18,33 @@
         "Programming Languages"
     ],
     "activationEvents": [
-		"onLanguage:pro"
-	],
-	"main": "./client/out/extension",
+        "onLanguage:pro"
+    ],
+    "main": "./client/out/extension",
     "contributes": {
         "configuration": {
-			"type": "object",
-			"title": "Example configuration",
-			"properties": {
-				"languageServerExample.maxNumberOfProblems": {
-					"scope": "resource",
-					"type": "number",
-					"default": 100,
-					"description": "Controls the maximum number of problems produced by the server."
-				},
-				"languageServerExample.trace.server": {
-					"scope": "window",
-					"type": "string",
-					"enum": [
-						"off",
-						"messages",
-						"verbose"
-					],
-					"default": "off",
-					"description": "Traces the communication between VS Code and the language server."
-				}
-			}
-		},
+            "type": "object",
+            "title": "Example configuration",
+            "properties": {
+                "languageServerExample.maxNumberOfProblems": {
+                    "scope": "resource",
+                    "type": "number",
+                    "default": 100,
+                    "description": "Controls the maximum number of problems produced by the server."
+                },
+                "languageServerExample.trace.server": {
+                    "scope": "window",
+                    "type": "string",
+                    "enum": [
+                        "off",
+                        "messages",
+                        "verbose"
+                    ],
+                    "default": "off",
+                    "description": "Traces the communication between VS Code and the language server."
+                }
+            }
+        },
         "languages": [
             {
                 "id": "pro",
@@ -66,24 +66,27 @@
             }
         ],
         "snippets": [
-			{
-				"language": "pro",
-				"path": "./snippets.json"
-			}
-		]
+            {
+                "language": "pro",
+                "path": "./snippets.json"
+            }
+        ]
     },
-        "scripts": {
-            "vscode:prepublish": "cd client && npm run update-vscode && cd .. && npm run compile",
-            "compile": "tsc -b",
-            "watch": "tsc -b -w",
-            "postinstall": "cd client && npm install && cd ../server && npm install && cd ..",
-            "test": "sh ./scripts/e2e.sh"
-        },
-        "devDependencies": {
-            "@types/mocha": "^5.2.0",
-            "@types/node": "^8.0.0",
-            "tslint": "^5.16.0",
-            "typescript": "^3.5.1"
-        }
+    "scripts": {
+        "vscode:prepublish": "cd client && npm run update-vscode && cd .. && npm run compile",
+        "compile": "tsc -b",
+        "watch": "tsc -b -w",
+        "postinstall": "cd client && npm install && cd ../server && npm install && cd ..",
+        "test": "sh ./scripts/e2e.sh"
+    },
+    "devDependencies": {
+        "@types/mocha": "^5.2.0",
+        "@types/node": "^8.0.0",
+        "tslint": "^5.16.0",
+        "typescript": "^3.5.1"
+    },
+    "dependencies": {
+        "@types/lodash": "^4.14.138",
+        "lodash": "^4.17.15"
     }
-
+}

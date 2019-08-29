@@ -23,3 +23,5 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## Branch LSP_TEST
  - adding LSP framework for future expansion.
+ - adapted from https://github.com/chriscamicas/vscode-abl/ for a framework for LSP DocumentSymbolProvider, adapted for vscode-languageserver
+ - untidy and non-functional

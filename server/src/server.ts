@@ -2,7 +2,6 @@
  * Copyright (c) Microsoft Corporation. All rights reserved.
  * Licensed under the MIT License. See License.txt in the project root for license information.
  * ------------------------------------------------------------------------------------------ */
-
 import {
 	createConnection,
 	TextDocuments,
@@ -14,8 +13,31 @@ import {
 	DidChangeConfigurationNotification,
 	CompletionItem,
 	CompletionItemKind,
-	TextDocumentPositionParams
+	TextDocumentPositionParams,
+	TextDocumentItem,
+
+	TextDocumentIdentifier,
+	DocumentSymbol,
+	DocumentSymbolRequest,
+	DocumentSymbolParams,
+	SymbolInformation,
+	SymbolKind,
+	Range,
+	Location
+
+
 } from 'vscode-languageserver';
+import * as utils from './utils';
+
+
+import * as vscode from 'vscode-languageserver';
+import { start } from 'repl';
+import { connect } from 'net';
+
+import Uri from "vscode-uri";
+import * as path from "path";
+
+import {ParseDocument, ParseItem} from './parser';
 
 // Create a connection for the server. The connection uses Node's IPC as a transport.
 // Also include all preview / proposed LSP features.
@@ -52,7 +74,9 @@ connection.onInitialize((params: InitializeParams) => {
 			// Tell the client that the server supports code completion
 			completionProvider: {
 				resolveProvider: true
-			}
+			},
+			// Tell the client that the server supports document Symbols
+			documentSymbolProvider: true
 		}
 	};
 });
@@ -210,6 +234,172 @@ connection.onCompletionResolve(
 		return item;
 	}
 );
+
+
+connection.onDocumentSymbol(onDocumentSymbol);
+
+//async then promise.resolve
+
+function onDocumentSymbol(documentSymbol: DocumentSymbolParams ): SymbolInformation[] {
+	//console.log("onDocumentSymbol...");
+	const path = utils.uriToPath(documentSymbol.textDocument.uri);
+	console.log('Server.onDocumentSymbol',documentSymbol);
+	const symbolInformationResult: SymbolInformation[] = [];
+	const uri = documentSymbol.textDocument.uri;
+	var thisdoc = documents.get(uri);
+
+//	var mydoc1 : documents.get(uri);
+
+	//var docs = new vscode.TextDocuments();
+	//var doc = documentSymbol.textDocument.getText();
+//	var text = documentSymbol.textDocument.getText();
+//var thisdoc = documents.get(uri);
+//var text = thisdoc.get(content);
+
+
+
+
+	//console.log(thisdoc);
+	//var vtext = documentSymbol
+	
+	//var text = documentSymbol.
+
+	//console.log(uri);
+	//console.log(doc);
+
+	/*
+	  const filePath = _filePathFromUri(documentSymbol.textDocument.uri);
+	  const file = workspace.getFile(filePath);
+	  if (!file) {
+		  */
+
+	/*
+	let m2: RegExpExecArray | null;
+	let pattern2 = /\b[A-Z]{2,}\b/g;
+	//let text2 = doc.getText();
+	##lwr text1  documentSymbol.textDocument.getText();
+	let mysymbol : SymbolInformation = {
+		name: 'bob',
+		kind: SymbolKind.Field,
+		range: {
+			start: doc.positionAt(m.index),
+			end: doc.positionAt(m2.index + m2[0].length)
+		},	
+	uri: uri
+	
+	};
+
+
+		symbols.push(mysymbol);
+*/	
+
+
+
+
+	
+	//let text = doc.getText();
+
+	//let pattern = /\b[A-Z]{2,}\b/g;
+
+	
+		/*
+			var mysymb;
+		myrange = Range.create(1, 1,2 , 0);
+		mysymb = SymbolInformation.create('dbfield1', 2, myrange, uri,undefined);
+		symbols.push(mysymb);
+		mysymb = SymbolInformation.create('dbfield2', 2, myrange, uri, 'dbfield1');
+		symbols.push(mysymb);
+		mysymb = SymbolInformation.create('var1', 5, myrange, uri, 'dbfield1');
+		symbols.push(mysymb);
+		mysymb = SymbolInformation.create('var2', 5, myrange, uri, 'dbfield1');
+		symbols.push(mysymb);
+		mysymb = SymbolInformation.create('string1', 6, myrange, uri, 'dbfield1');
+		symbols.push(mysymb);
+		mysymb = SymbolInformation.create('string2', 6, myrange, uri, 'dbfield1');
+		symbols.push(mysymb);
+		//mysymb = SymbolInformation.create(name: 'html', kind: SymbolKind.Field, containerName: '', location: Location.create(TEST_URI, Range.create(0, 0, 0, 37)));
+
+*/
+
+		const symbols: ParseItem[] = ParseDocument(thisdoc);
+
+for (const symbol of symbols){
+	//check this works.. - substitution for lineAt(symbol.line).range
+	//const pLoc = Location.create(document.baseURI, vscode.Range.create(symbol.line, -1, symbol.line, Number.MAX_VALUE));
+//const symbolInformation = SymbolInformation.create(symbol.name,symbol.type,'',pLoc);
+//expand with container name for nested?
+const symbolRange = Range.create(symbol.line,0,symbol.line,Number.MAX_VALUE);
+	const symbolInformation = SymbolInformation.create(symbol.name,symbol.type,symbolRange);
+	symbolInformationResult.push(symbolInformation);
+}
+	return symbolInformationResult;
+	/*
+  }
+ 
+  return getFileSymbols(file);
+*/
+}
+
+
+
+/*
+connection.onDocumentSymbol(documentSymbolParams => {
+	const document = documents.get(documentSymbolParams.textDocument.uri);
+
+	if (!document) {
+		return [];
+	} else {
+		const symbols: SymbolInformation[] = [];
+		for (var i = 0; i < document.lineCount; i++) {
+			let lines = document.getText().split(/\r?\n/g);
+			let line = lines[i];
+			if (line.startsWith("@")) {
+let docsym = new DocumentSymbol();
+docsym.name='test';
+docsym.kind = vscode.SymbolKind.Field;
+docsym.push({
+	range: {
+	start: { line: i, character: index },
+	end: { line: i, character: index + 10 }
+}
+});
+*/
+
+
+
+//symbols.push(new DocumentSymbol("Level 1: WORD", document.lines[i+1].trim(), icon_main, line.range, line.range ));
+/*
+				symbols.push( {new SymbolInformation(
+					name: line.substr(1),
+					kind: vscode.SymbolKind.Field,
+					location:  new vscode.Location(document.uri,new vscode.Position(1, 2)))
+				
+				});
+			
+		};
+	return symbols;
+}
+
+});
+
+
+*/
+
+
+
+/*
+connection.onDocumentSymbol((documentSymbol: DocumentSymbolParams): SymbolInformation[] => {
+	console.log("onDocumentSymbol...");
+	connection.onDocumentSymbol((documentSymbol: DocumentSymbolParams);
+	if (!document) {
+        return;
+    };
+
+	/*
+	return [new DocumentSymbol("name", "", SymbolKind.Variable,
+                               new Range(0, 0, 1, 0), new Range(0, 4, 0, 8))];
+		}*/
+
 
 /*
 connection.onDidOpenTextDocument((params) => {
