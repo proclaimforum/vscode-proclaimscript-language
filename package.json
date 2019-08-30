@@ -2,7 +2,7 @@
     "name": "proclaimscript",
     "displayName": "Proclaim Maths Script",
     "description": "Syntax highlighting for Eclipse Proclaim Maths script",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "publisher": "BurnsideConsultingLtd",
     "repository": {
         "type": "git",
@@ -94,7 +94,5 @@
         "merge-options": "^1.0.1",
         "rimraf": "^3.0.0"
     },
-    "dependencies": {
-     
-    }
+    "dependencies": {}
 }
