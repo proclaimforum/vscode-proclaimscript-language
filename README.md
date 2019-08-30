@@ -1,6 +1,6 @@
 # Proclaim Maths Script VSCode Language Extension
 
-A Visual Studio Code Language Extension
+A Visual Studio Code Language Server Extension
 for Eclipse Proclaim Maths Script
 
 (C)  Burnside Consulting Ltd 2019
@@ -10,6 +10,7 @@ for Eclipse Proclaim Maths Script
 * Syntax highlighting, including Proclaim Maths Keywords featured in versions up to 3.4.02
 * IF THEN ELSE code folding and indentation
 * Snippets framework for example maths layouts
+* Basic Outline Symbol detection
 
 ## Installation
 
@@ -23,7 +24,7 @@ To install a development version directly from the GIT respository files:
 
 ## Requirements
 
-Written on VS Code version 1.36.0 Node.js 10.11.0
+Written on VS Code version 1.36.0 Node.js 10.11.0.
 
 ## Extension Settings
 
@@ -31,7 +32,7 @@ No specific settings at this time.
 
 ## Known Issues
 
-* IF ELSE autocompletion competition with C/C++ makes writing IF ELSE blocks a little clunky
+* IF ELSE autocompletion competition with C/C++ LSP makes writing IF ELSE blocks a little clunky
 * autocomplete / folding of IF ELSE is case sensitive.
 
 ## Release Notes
@@ -44,7 +45,11 @@ First release 0.1.1 on 13/08/2019
 * theme/colouring to match Proclaim editor when VSCode theme is white background
 * more snippets for sample keywords, based on Example Maths from ProclaimForum.co.uk
 * Intellisense / autocomplete for inline help for keywords
-* Define Document Symbols via VSCode API so that variable names, DB fields keywords etc show in the VSCode OUTLINE view
+* improve DocumentSymbol parsing to include variables.
+* 'Problems' LSP for e.g. mismatched 
+* create new Command to replicate the old 'syntax check' output that displays a summary of all DB fields, variables and strings.
+* hook into live Proclaim system to syntax check DB field names
+
 
 ## Contributing
 
@@ -54,7 +59,8 @@ Pull requests welcomed
 
 * Syntax highlighting rules are defined in pro.tmlLanguage.json
 * Indentation rules are defined in language-configuration.json
-* Snippets (sample code/Intellisense) stored in snippets.json
+* Snippets (sample code/Intellisense) are defined in snippets.json
+* Symbol parsing (for OUTLINE view) are defined in  in server/src/parser.ts
 * In Proclaim v3.4+, the definition of the built-in syntax highlighter (CodeJock Syntax Edit) is stored in ConfigEditor/Schemas/_Proclaim.schclass
 * To see how the extension has parsed a specific line/keywork, go View-->Command Palette.. Developer: Inspect TM Scopes
 * For contributing/making changes to the extension, instead of 'installing' the script into your extensions directory try running the extension in the VSCode Extension Development Host 

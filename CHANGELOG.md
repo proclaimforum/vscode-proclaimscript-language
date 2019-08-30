@@ -20,3 +20,10 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ## [0.1.4] - 2019-08-22
 ### Fixed
 - variable highlighting where variable name contained numeric or arithmetic symbol
+
+ ## [0.2.0] - 2019-01-09
+ ### Added
+ - merged branch LSP_TEST:
+ - migrated to LSP client/server model to allow future expansion
+ - Outline symbol detection of DB fields and strings (helps debug typos)
+ - webpack vsix for cleaner install
