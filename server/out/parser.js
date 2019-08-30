@@ -9,9 +9,9 @@ const PARSE_STRING = 3;
 function ParseDocument(document) {
     // this stores all the symbols we create
     const symbols = [];
+    const mysyms = [];
     let parseStatus = new ParseStatus();
     //array of already found symbols (strings, DB fields), that should be checked to see if new (eg) variable is inside or not
-    const mysyms = [];
     //make heading symbols (bit of a bodge but expermient)
     // Parse the document, line by line
     for (let i = 0; i < document.lineCount; i++) {
@@ -28,11 +28,12 @@ function ParseDocument(document) {
             // 
             //let symName:string = 'string: ' + (i+1).toString();
             let symName = oneline.substr(oneString[0], oneString[1] - oneString[0] + 1);
-            let resultSymbol = new ParseItem(symName, vscode.SymbolKind.String);
-            resultSymbol.line = i;
-            resultSymbol.container = "STRINGS:";
-            symbols.push(resultSymbol);
-            let onesym = new MySymbol(resultSymbol, oneString[0], oneString[1]);
+            let resultItem = new ParseItem(symName, vscode.SymbolKind.String);
+            resultItem.line = i;
+            resultItem.container = "STRINGS:";
+            symbols.push(resultItem);
+            //add on a start and end postition to form a MySymbol
+            let onesym = new MySymbol(resultItem, oneString[0], oneString[1]);
             mysyms.push(onesym);
         }
         // 3- DB fields
@@ -42,7 +43,7 @@ function ParseDocument(document) {
             // check if this is inside an existing  symbol
             var inside = false;
             check: for (var symb of mysyms) {
-                if (symb.withinField(oneDB[0])) {
+                if (symb.withinField(i, oneDB[0])) {
                     inside = true;
                     break check;
                 }
@@ -55,13 +56,14 @@ function ParseDocument(document) {
                 symbols.push(resultSymbol);
                 // also addit to mysms array
                 let onesym = new MySymbol(resultSymbol, oneDB[0], oneDB[1]);
+                mysyms.push(onesym);
             }
         }
     }
     // 4 - everything else - split line into words delimited by non-ascii characters excluding {}"
     //if the word is in the keywords list, then ignore,
     // otherwise, word is a variable - make into symbol
-    return symbols;
+    return mysyms;
 }
 exports.ParseDocument = ParseDocument;
 // find all strings (a string may want to display a field name or curly braces)
@@ -144,14 +146,25 @@ class MySymbol {
         if (typeof pStart === 'undefined') {
             this.start = 0;
         }
+        else {
+            this.start = pStart;
+        }
         if (typeof pEnd === 'undefined') {
             this.end = 0;
         }
+        else {
+            this.end = pEnd;
+        }
         this.parseItem = pItem;
     }
-    withinField(pPosition) {
-        if (pPosition >= this.start && pPosition <= this.end) {
-            return true;
+    withinField(pLine, pPosition) {
+        if (this.parseItem.line == pLine) {
+            if (pPosition >= this.start && pPosition <= this.end) {
+                return true;
+            }
+            else {
+                return false;
+            }
         }
         else {
             return false;

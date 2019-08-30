@@ -205,11 +205,11 @@ function onDocumentSymbol(documentSymbol) {
     for (const symbol of symbols) {
         // What is the document range that covers this symbol? 
         // this is the character range of the whole line, rather than just the symbol start and end
-        const symbolRange = vscode_languageserver_1.Range.create(symbol.line, 0, symbol.line, Number.MAX_VALUE);
+        const symbolRange = vscode_languageserver_1.Range.create(symbol.parseItem.line, symbol.start, symbol.parseItem.line, symbol.end);
         // Construct symbolInformation Object
         // TODO: Expand with container name for nesting DB fields, Variables, Strings, keywords?
         // EG create a dummy symbol as a container for each symbolKind, then nest each symbolKind as child node 
-        const symbolInformation = vscode_languageserver_1.SymbolInformation.create(symbol.name, symbol.type, symbolRange, uri, symbol.container);
+        const symbolInformation = vscode_languageserver_1.SymbolInformation.create(symbol.parseItem.name, symbol.parseItem.type, symbolRange, uri, symbol.parseItem.container);
         var conName = symbolInformation.containerName;
         // Finally, push the symbol to output array
         symbolInformationResult.push(symbolInformation);

@@ -6,18 +6,16 @@ const PARSE_DBFIELD = 2;
 const PARSE_STRING = 3;
 
 //export function ParseDocument(document: vscode.TextDocument, token: vscode.CancellationToken): ParseItem[] {
-export function ParseDocument(document: vscode.TextDocument): ParseItem[] {
+export function ParseDocument(document: vscode.TextDocument): MySymbol[] {
 	// this stores all the symbols we create
 	const symbols: ParseItem[] = [];
+	const mysyms: MySymbol[] = [];
 
 	let parseStatus = new ParseStatus();
 	//array of already found symbols (strings, DB fields), that should be checked to see if new (eg) variable is inside or not
-	const mysyms: MySymbol[] = [];
 
-		//make heading symbols (bit of a bodge but expermient)
-	
-	
-	
+
+	//make heading symbols (bit of a bodge but expermient)
 
 	// Parse the document, line by line
 
@@ -32,45 +30,47 @@ export function ParseDocument(document: vscode.TextDocument): ParseItem[] {
 
 		// 2 - find STRINGS. store start and end in mysms array for later
 		var oneString: [number, number] = findSymbol(oneline, '"');
-		if ((oneString[0] !== -1 && oneString[1] !== -1)) {	
-		
+		if ((oneString[0] !== -1 && oneString[1] !== -1)) {
+
 			//make a MySymbol to record the range of strings for exclusion from other searches
 			//TODO
 			// 
 			//let symName:string = 'string: ' + (i+1).toString();
 			let symName: string = oneline.substr(oneString[0], oneString[1] - oneString[0] + 1);
-			let resultSymbol = new ParseItem(symName, vscode.SymbolKind.String);
-			resultSymbol.line = i;
-			resultSymbol.container="STRINGS:";
+			let resultItem = new ParseItem(symName, vscode.SymbolKind.String);
+			resultItem.line = i;
+			resultItem.container = "STRINGS:";
 
-			symbols.push(resultSymbol);
-			let onesym: MySymbol = new MySymbol(resultSymbol, oneString[0], oneString[1]);
+			symbols.push(resultItem);
+
+			//add on a start and end postition to form a MySymbol
+			let onesym: MySymbol = new MySymbol(resultItem, oneString[0], oneString[1]);
 			mysyms.push(onesym);
 		}
 		// 3- DB fields
 		// find DB fields like you do with strings,  
 		var oneDB: [number, number] = findSymbol(oneline, '{', '}');
 		if (oneDB[0] !== -1 && oneDB[1] !== -1) {
-			
-		
+
+
 			// check if this is inside an existing  symbol
 			var inside: boolean = false;
 			check: for (var symb of mysyms) {
-				if (symb.withinField(oneDB[0])) {
+				if (symb.withinField(i,oneDB[0])) {
 					inside = true;
 					break check;
 				}
 			}
 			if (!inside) {
 				let symName: string = oneline.substr(oneDB[0], oneDB[1] - oneDB[0] + 1);
-				let resultSymbol = new ParseItem(symName,vscode.SymbolKind.Field);
+				let resultSymbol = new ParseItem(symName, vscode.SymbolKind.Field);
 				resultSymbol.line = i;
 				resultSymbol.container = "DB FIELDS:";
 				symbols.push(resultSymbol);
 
 				// also addit to mysms array
-				let onesym: MySymbol = new MySymbol(resultSymbol,oneDB[0],oneDB[1]);
-
+				let onesym: MySymbol = new MySymbol(resultSymbol, oneDB[0], oneDB[1]);
+				mysyms.push(onesym);
 			}
 		}
 
@@ -80,7 +80,7 @@ export function ParseDocument(document: vscode.TextDocument): ParseItem[] {
 	// otherwise, word is a variable - make into symbol
 
 
-	return symbols;
+	return mysyms;
 }
 // find all strings (a string may want to display a field name or curly braces)
 // find all db fields that aren't in strings
@@ -142,12 +142,12 @@ function findSymbol(pLine: string, pDelimOpen: string, pDelimClose?: string): [n
 	let i: number = 0;
 	let nStart: number = -1;
 	let nEnd: number = -1;
-	var pClose:string;
+	var pClose: string;
 
-	if ( typeof pDelimClose === 'undefined') {
+	if (typeof pDelimClose === 'undefined') {
 		pClose = pDelimOpen;
 	} else {
-		pClose= pDelimClose;
+		pClose = pDelimClose;
 	}
 	let startFound: boolean = false;
 
@@ -202,16 +202,24 @@ export class MySymbol {
 	constructor(pItem: ParseItem, pStart?: number, pEnd?: number) {
 		if (typeof pStart === 'undefined') {
 			this.start = 0;
+		} else {
+			this.start = pStart;
 		}
 		if (typeof pEnd === 'undefined') {
 			this.end = 0;
+		} else {
+			this.end = pEnd;
 		}
 		this.parseItem = pItem;
 	}
 
-	withinField(pPosition: number): boolean {
-		if (pPosition >= this.start && pPosition <= this.end) {
-			return true;
+	withinField(pLine: number, pPosition: number): boolean {
+		if (this.parseItem.line == pLine) {
+			if (pPosition >= this.start && pPosition <= this.end) {
+				return true;
+			} else {
+				return false;
+			}
 		} else {
 			return false;
 		}
@@ -223,7 +231,7 @@ export class ParseItem {
 	public line: number;
 	public type: vscode.SymbolKind;
 	public container: string;
-	
+
 
 	constructor(pName: string, pType?: vscode.SymbolKind) {
 		if (typeof pType === 'undefined') {

@@ -28,7 +28,7 @@ import {
 
 //import * as vscode from 'vscode-languageserver';
 
-import { ParseDocument, ParseItem } from './parser';
+import { ParseDocument, ParseItem, MySymbol } from './parser';
 
 // Create a connection for the server. The connection uses Node's IPC as a transport.
 // Also include all preview / proposed LSP features.
@@ -260,7 +260,7 @@ function onDocumentSymbol(documentSymbol: DocumentSymbolParams): SymbolInformati
 
 	// Retrieve list of symbols by passing document to parser
 	// ParseItem is (name,symbolKind and Line), but not Range
-	const symbols: ParseItem[] = ParseDocument(thisdoc);
+	const symbols: MySymbol[] = ParseDocument(thisdoc);
 	
 
 	//for each symbok, construct a SymbolInformation Object, and push to result array
@@ -268,12 +268,12 @@ function onDocumentSymbol(documentSymbol: DocumentSymbolParams): SymbolInformati
 		
 		// What is the document range that covers this symbol? 
 		// this is the character range of the whole line, rather than just the symbol start and end
-		const symbolRange = Range.create(symbol.line, 0, symbol.line, Number.MAX_VALUE);
+		const symbolRange = Range.create(symbol.parseItem.line, symbol.start, symbol.parseItem.line, symbol.end);
 
 		// Construct symbolInformation Object
 		// TODO: Expand with container name for nesting DB fields, Variables, Strings, keywords?
 		// EG create a dummy symbol as a container for each symbolKind, then nest each symbolKind as child node 
-		const symbolInformation = SymbolInformation.create(symbol.name, symbol.type, symbolRange,uri,symbol.container);
+		const symbolInformation = SymbolInformation.create(symbol.parseItem.name, symbol.parseItem.type, symbolRange,uri,symbol.parseItem.container);
 		var conName = symbolInformation.containerName;
 		// Finally, push the symbol to output array
 		symbolInformationResult.push(symbolInformation);
