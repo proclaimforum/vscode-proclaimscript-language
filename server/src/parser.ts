@@ -1,154 +1,156 @@
 import * as vscode from 'vscode-languageserver';
 
-// instruction mode (default), comment mode. string mode
+// instruction mode (default), DBField mode. string mode
 const PARSE_INSTRUCTION = 1;
-const PARSE_COMMENT = 2;
+const PARSE_DBFIELD = 2;
 const PARSE_STRING = 3;
 
 //export function ParseDocument(document: vscode.TextDocument, token: vscode.CancellationToken): ParseItem[] {
-	export function ParseDocument(document: vscode.TextDocument): ParseItem[] {
+export function ParseDocument(document: vscode.TextDocument): ParseItem[] {
 	// this stores all the symbols we create
 	const symbols: ParseItem[] = [];
 
 	let parseStatus = new ParseStatus();
+	//array of already found symbols (strings, DB fields), that should be checked to see if new (eg) variable is inside or not
+	const mysyms: MySymbol[] = [];
 
 	// Parse the document, line by line
 	for (let i = 0; i < document.lineCount; i++) {
+		let oneline = document.getText(vscode.Range.create(i, -1, i, Number.MAX_VALUE));
 
-		// Cancel this on Request
-		/*
-		if (token.isCancellationRequested) {
-			throw new Error('Operation cancelllation');
-		}
-*/
-/*
-         * read a line, remove whitespaces
-         * add a space at line-end so parser doesnt concat multiline stuff into one word
-         * like ELSE<LINE-BREAK>DO -> ELSEDO
-         */
-		//var myrange = vscode.Range.create(1, 2, 3, 4);
-
-		let comp = document.getText(vscode.Range.create(i, -1, i, Number.MAX_VALUE));
-		//let comp = document.lineAt(i).text.trim() + ' ';
-
-
-		// set parse status
-		parseStatus.parseString = comp;
-		// parse_status.instruction_string = parse_status.instruction_string.trim();
-		if (parseStatus.instructionString.trim().length === 0) {
-			parseStatus.instructionStartLine = i;
+		// 1 - Exclude comment lines
+		if (oneline[0] === '#') {
+			continue;
 		}
 
-		// tilde bullshit (see abl documentation)
-		// we need to evaluate all tildes before we do anything else
-		let tildePos = 0;
+		// 2 - find strings. store start and end in mysms array for later
+		var oneString: [number, number] = findSymbol(oneline, '"');
+		if ((oneString[0] !== -1 && oneString[1] !== -1)) {	
+		
+			//make a MySymbol to record the range of strings for exclusion from other searches
+			//TODO
+			// 
+			//let symName:string = 'string: ' + (i+1).toString();
+			let symName: string = oneline.substr(oneString[0], oneString[1] - oneString[0] + 1);
+			let resultSymbol = new ParseItem(symName, vscode.SymbolKind.String);
+			resultSymbol.line = i;
 
-		// stuff escaped by tilde
-		parseStatus.parseString = parseStatus.parseString.replace('~\'', '\'\'');
-		parseStatus.parseString = parseStatus.parseString.replace('~"', '""');
-		parseStatus.parseString = parseStatus.parseString.replace('~\\', '\\');
-		parseStatus.parseString = parseStatus.parseString.replace('~{', '{');
-		// replace special chars with blank, we dont evaluate them anyway
-		parseStatus.parseString = parseStatus.parseString.replace('~t', ' ');
-		parseStatus.parseString = parseStatus.parseString.replace('~r', ' ');
-		parseStatus.parseString = parseStatus.parseString.replace('~n', ' ');
-		parseStatus.parseString = parseStatus.parseString.replace('~E', ' ');
-		parseStatus.parseString = parseStatus.parseString.replace('~b', ' ');
-		parseStatus.parseString = parseStatus.parseString.replace('~f', ' ');
-
-		// check octal char
-		tildeCheck: while (true) {
-			tildePos = parseStatus.parseString.search(/~[0-3][0-7][0-7]/);
-			// no tilde found
-			if (tildePos < 0) {
-				break tildeCheck;
-			}
-			const replaceMe = parseStatus.parseString.substr(tildePos, 4);
-			parseStatus.parseString = parseStatus.parseString.replace(replaceMe, ' ');
+			symbols.push(resultSymbol);
+			let onesym: MySymbol = new MySymbol(resultSymbol, oneString[0], oneString[1]);
+			mysyms.push(onesym);
 		}
-
-		// remove single tilde
-		parseStatus.parseString = parseStatus.parseString.replace(/~(?!~)/, ' ');
-
-		// double tilde for tilde
-		parseStatus.parseString = parseStatus.parseString.replace('~~', '~');
-
-		// If we are in comment mode, check for comment end
-		if (parseStatus.parseMode === PARSE_COMMENT) {
-			parseStatus = parseForCommentEnd(parseStatus);
-		}
-
-		// If we are in string mode, check for string end
-		if (parseStatus.parseMode === PARSE_STRING) {
-			parseStatus = parseForStringEnd(parseStatus);
-		}
-
-		// check for mode_change
-		mcc: while (parseStatus.parseString.length > 0) {
-			const modeChange = parseStatus.parseString.search(/"|'|\/\/|\/\*/);
-			if (modeChange >= 0) {
-				const firstChar = parseStatus.parseString.substr(modeChange, 1);
-				// remember parseable part
-				if (modeChange > 0) {
-					parseStatus.instructionString += parseStatus.parseString.substring(0, modeChange);
+		// 3- DB fields
+		// find DB fields like you do with strings,  
+		var oneDB: [number, number] = findSymbol(oneline, '{', '}');
+		if (oneDB[0] !== -1 && oneDB[1] !== -1) {
+			
+		
+			// check if this is inside an existing  symbol
+			var inside: boolean = false;
+			check: for (var symb of mysyms) {
+				if (symb.withinField(oneDB[0])) {
+					inside = true;
+					break check;
 				}
-				if (firstChar === '"' || firstChar === '\'') {
-					// Enter String Mode
-					parseStatus.parseMode = PARSE_STRING;
-					parseStatus.stringQuote = firstChar;
-					parseStatus.parseString = parseStatus.parseString.substr(modeChange + 1);
-					parseStatus = parseForStringEnd(parseStatus);
-				} else {
-					const secondChar = parseStatus.parseString.substr(modeChange + 1, 1);
-					if (secondChar === '/') {
-						// Line Comment
-						parseStatus.parseString = '';
-					} else {
-						// Enter Comment mode
-						parseStatus.parseMode = PARSE_COMMENT;
-						parseStatus.parseString = parseStatus.parseString.substr(modeChange + 2);
-						parseStatus = parseForCommentEnd(parseStatus);
-					}
-				}
-			} else {
-				break mcc;
 			}
-		}
-		parseStatus.instructionString += parseStatus.parseString;
-
-/*
-         * check for colon (start block) and dot (end of command)
-         * must be followed by white-space or line-end otherwise its something else
-         */
-		let iEnd = parseStatus.instructionString.search(/:(?=\s|$)|\.(?=\s|$)/);
-		while (iEnd >= 0) {
-			const endChar = parseStatus.instructionString.substr(iEnd, 1);
-			comp = parseStatus.instructionString.substring(0, iEnd).trim();
-			parseStatus.instructionString = parseStatus.instructionString.substr(iEnd + 1);
-
-			let resultSymbol: ParseItem;
-			if (endChar === ':') {
-				// block parse
-				resultSymbol = parseBlock(comp);
-			} else {
-				// command parse
-				resultSymbol = parseInstruction(comp);
-			}
-
-			// found something, add the line number
-			if (resultSymbol != null) {
-				resultSymbol.line = parseStatus.instructionStartLine;
+			if (!inside) {
+				let symName: string = oneline.substr(oneDB[0], oneDB[1] - oneDB[0] + 1);
+				let resultSymbol = new ParseItem(symName,vscode.SymbolKind.Field);
+				resultSymbol.line = i;
 				symbols.push(resultSymbol);
+
+				// also addit to mysms array
+				let onesym: MySymbol = new MySymbol(resultSymbol,oneDB[0],oneDB[1]);
+
 			}
-
-			// check again for colon (start block) and dot (end of command)
-			iEnd = parseStatus.instructionString.search(/:(?=\s|$)|\.(?=\s|$)/);
 		}
-	}
 
+	}
 	return symbols;
 }
+// find all strings (a string may want to display a field name or curly braces)
+// find all db fields that aren't in strings
+// find all other words by delim, if it's not a keyword, then it's a variable
 
+// 2 - find all db fields. store as item with symbol. Extend class to include start and end position
+// function findblock (line, delim): returns item or null
+// find start brace. find end brace - everything inbetween is classed as a DBfield
+// if we reach end of string before then item is not classed as field
+
+// find all STRINGS
+//find start quote, 
+
+// 3 - find all variables
+// what is a variable - it's all other text not inside a DBfield, delimited by (){}\s,
+
+//function get word:
+//for each string.split(bydelim)
+//start = current pointer
+//end = string.length
+
+//if it is a KEYWORD then ignore
+//if it is inside a DB field then ignore
+//otherwise it's a variable
+
+//set start = end (+1?)
+//
+
+
+// constants?
+
+
+// 3 - 
+// FOR EACH WORD (split by space or bracket/curlybracet/comma)
+// word delimiters: (){},whitespace
+// string.split("\\P{Alpha}")
+
+// if it's a keyword, ignore it
+
+//if we are in DB field mode, check for field end
+
+//if we are in string mode, check for string end
+
+// 2 - DB Fields
+
+
+// search for opening brace
+// search for closing brace...
+// if closing brace then mark as DB field
+
+
+// 3 - keywords (any way to link this to languagefile?)
+
+// 4 - 
+
+
+function findSymbol(pLine: string, pDelimOpen: string, pDelimClose?: string): [number, number] {
+	// returns start and end position of string in a line
+	let i: number = 0;
+	let nStart: number = -1;
+	let nEnd: number = -1;
+	var pClose:string;
+
+	if ( typeof pDelimClose === 'undefined') {
+		pClose = pDelimOpen;
+	} else {
+		pClose= pDelimClose;
+	}
+	let startFound: boolean = false;
+
+	for (const c of pLine) {
+		if ((c == pDelimOpen && !startFound) || (c == pClose && startFound)) {
+			if (!startFound) {
+				nStart = i;
+				startFound = true;
+			} else {
+				nEnd = i;
+				return ([nStart, nEnd]);
+			}
+		}
+		i++;
+	}
+	return [nStart, nEnd];
+}
 // store information about the parse state
 class ParseStatus {
 	public parseMode: number;
@@ -172,6 +174,36 @@ class ParseStatus {
 
 // Store Information about the Parsed Object
 // tslint:disable-next-line: max-classes-per-file
+
+export class MySymbol {
+
+	//contains ParseItem to create SymbolItem from, and also the found start and end character positions
+	// to detect whether we are inside an existing symbol or not (eg comment or DB field) 
+	// could later be extended to pass out to calling server for creating symbol including range
+	public parseItem: ParseItem;
+	public start: number;
+	public end: number;
+
+
+	constructor(pItem: ParseItem, pStart?: number, pEnd?: number) {
+		if (typeof pStart === 'undefined') {
+			this.start = 0;
+		}
+		if (typeof pEnd === 'undefined') {
+			this.end = 0;
+		}
+		this.parseItem = pItem;
+	}
+
+	withinField(pPosition: number): boolean {
+		if (pPosition >= this.start && pPosition <= this.end) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+}
+
 export class ParseItem {
 	public name: string;
 	public line: number;
@@ -188,35 +220,35 @@ export class ParseItem {
 	}
 }
 
-// Search for Comment End
-function parseForCommentEnd(pStatus: ParseStatus): ParseStatus {
-	// check start comment
-	let commentStart = 0;
-	comment: while (commentStart >= 0) {
-		// check comment
-		commentStart = pStatus.parseString.search(/\/\*|\*\//);
+// Search for DBField End
+function parseForDBFieldEnd(pStatus: ParseStatus): ParseStatus {
+	// check start DBField
+	let DBFieldStart = 0;
+	DBField: while (DBFieldStart >= 0) {
+		// check DBField
+		DBFieldStart = pStatus.parseString.search(/\/\*|\*\//);
 
-		// line inside a comment, ignore
-		if (commentStart === -1) {
+		// line inside a DBField, ignore
+		if (DBFieldStart === -1) {
 			pStatus.parseString = '';
-			break comment;
+			break DBField;
 		}
 
-		// set new comment depth level
-		const commentType = pStatus.parseString.substr(commentStart, 2);
-		if (commentType === '/*') {
+		// set new DBField depth level
+		const DBFieldType = pStatus.parseString.substr(DBFieldStart, 2);
+		if (DBFieldType === '/*') {
 			pStatus.parseDepth++;
 		} else {
 			pStatus.parseDepth--;
 		}
 
 		// adjust parse string
-		pStatus.parseString = pStatus.parseString.substr(commentStart + 2);
+		pStatus.parseString = pStatus.parseString.substr(DBFieldStart + 2);
 
-		// comment is over, return
+		// DBField is over, return
 		if (pStatus.parseDepth <= 0) {
 			pStatus.parseMode = PARSE_INSTRUCTION;
-			break comment;
+			break DBField;
 		}
 	}
 	return pStatus;

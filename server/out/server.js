@@ -180,65 +180,23 @@ connection.onDocumentSymbol(onDocumentSymbol);
 //change to async then promise.resolve
 function onDocumentSymbol(documentSymbol) {
     console.log('Server.onDocumentSymbol', documentSymbol);
-    //console.log("onDocumentSymbol...");
     //const path = utils.uriToPath(documentSymbol.textDocument.uri);
     // Create an SymbolInformation[] Object to pass as result
     const symbolInformationResult = [];
     // Form local variables for changed doc uri (preliminary code is for DocumentSymbol not workspace-wide)
     const uri = documentSymbol.textDocument.uri;
     const thisdoc = documents.get(uri);
-    /*
-      const filePath = _filePathFromUri(documentSymbol.textDocument.uri);
-      const file = workspace.getFile(filePath);
-      if (!file) {
-          */
-    /*
-    let m2: RegExpExecArray | null;
-    let pattern2 = /\b[A-Z]{2,}\b/g;
-    //let text2 = doc.getText();
-    ##lwr text1  documentSymbol.textDocument.getText();
-    let mysymbol : SymbolInformation = {
-        name: 'bob',
-        kind: SymbolKind.Field,
-        range: {
-            start: doc.positionAt(m.index),
-            end: doc.positionAt(m2.index + m2[0].length)
-        },
-    uri: uri
-    };
-        symbols.push(mysymbol);
-*/
-    //let text = doc.getText();
-    //let pattern = /\b[A-Z]{2,}\b/g;
-    /*
-        var mysymb;
-    myrange = Range.create(1, 1,2 , 0);
-    mysymb = SymbolInformation.create('dbfield1', 2, myrange, uri,undefined);
-    symbols.push(mysymb);
-    mysymb = SymbolInformation.create('dbfield2', 2, myrange, uri, 'dbfield1');
-    symbols.push(mysymb);
-    mysymb = SymbolInformation.create('var1', 5, myrange, uri, 'dbfield1');
-    symbols.push(mysymb);
-    mysymb = SymbolInformation.create('var2', 5, myrange, uri, 'dbfield1');
-    symbols.push(mysymb);
-    mysymb = SymbolInformation.create('string1', 6, myrange, uri, 'dbfield1');
-    symbols.push(mysymb);
-    mysymb = SymbolInformation.create('string2', 6, myrange, uri, 'dbfield1');
-    symbols.push(mysymb);
-    //mysymb = SymbolInformation.create(name: 'html', kind: SymbolKind.Field, containerName: '', location: Location.create(TEST_URI, Range.create(0, 0, 0, 37)));
-
-*/
     // Retrieve list of symbols by passing document to parser
+    // ParseItem is (name,symbolKind and Line), but not Range
     const symbols = parser_1.ParseDocument(thisdoc);
     //for each symbok, construct a SymbolInformation Object, and push to result array
     for (const symbol of symbols) {
-        //check this works.. - substitution for lineAt(symbol.line).range
-        //const pLoc = Location.create(document.baseURI, vscode.Range.create(symbol.line, -1, symbol.line, Number.MAX_VALUE));
-        //const symbolInformation = SymbolInformation.create(symbol.name,symbol.type,'',pLoc);
-        // What is the document range that covers this symbol?
-        // Expand with container name for nested?
+        // What is the document range that covers this symbol? 
+        // this is the character range of the whole line, rather than just the symbol start and end
         const symbolRange = vscode_languageserver_1.Range.create(symbol.line, 0, symbol.line, Number.MAX_VALUE);
         // Construct symbolInformation Object
+        // TODO: Expand with container name for nesting DB fields, Variables, Strings, keywords?
+        // EG create a dummy symbol as a container for each symbolKind, then nest each symbolKind as child node 
         const symbolInformation = vscode_languageserver_1.SymbolInformation.create(symbol.name, symbol.type, symbolRange);
         // Finally, push the symbol to output array
         symbolInformationResult.push(symbolInformation);
