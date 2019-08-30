@@ -21,7 +21,9 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ### Fixed
 - variable highlighting where variable name contained numeric or arithmetic symbol
 
-## Branch LSP_TEST
- - adding LSP framework for future expansion.
- - adapted from https://github.com/chriscamicas/vscode-abl/ for a framework for LSP DocumentSymbolProvider, adapted for vscode-languageserver
- - untidy and non-functional
+ ## [0.2.0] - 2019-01-09
+ ### Added
+ - merged branch LSP_TEST:
+ - migrated to LSP client/server model to allow future expansion
+ - Outline symbol detection of DB fields and strings (helps debug typos)
+ - webpack vsix for cleaner install

@@ -1,5 +1,6 @@
 .vscode
-node_modules
+server/node_modules
+client/node_modules
 out/
 src/
 tsconfig.json
