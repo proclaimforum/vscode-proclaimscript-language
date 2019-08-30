@@ -69,7 +69,7 @@ First release 0.1.1 on 13/08/2019
 * remove remnants of example LSP framework
 =======
 * improve DocumentSymbol parsing to include variables.
-* 'Problems' LSP for e.g. mismatched 
+* 'Problems' LSP for usual syntax errors e.g. mismatched brackets
 * create new Command to replicate the old 'syntax check' output that displays a summary of all DB fields, variables and strings.
 * hook into live Proclaim system to syntax check DB field names
 >>>>>>> LSP implementation (#4)
