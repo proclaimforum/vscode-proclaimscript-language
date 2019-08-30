@@ -14,28 +14,19 @@ import {
 	CompletionItem,
 	CompletionItemKind,
 	TextDocumentPositionParams,
-	TextDocumentItem,
-
-	TextDocumentIdentifier,
-	DocumentSymbol,
-	DocumentSymbolRequest,
+	
 	DocumentSymbolParams,
 	SymbolInformation,
 	SymbolKind,
-	Range,
-	Location
+	
+	Range
+	
 
 
 } from 'vscode-languageserver';
-import * as utils from './utils';
+//import * as utils from './utils';
 
-
-import * as vscode from 'vscode-languageserver';
-import { start } from 'repl';
-import { connect } from 'net';
-
-import Uri from "vscode-uri";
-import * as path from "path";
+//import * as vscode from 'vscode-languageserver';
 
 import { ParseDocument, ParseItem } from './parser';
 
@@ -73,7 +64,9 @@ connection.onInitialize((params: InitializeParams) => {
 			textDocumentSync: documents.syncKind,
 			// Tell the client that the server supports code completion
 			completionProvider: {
+
 				resolveProvider: true
+				
 			},
 			// Tell the client that the server supports document Symbols
 			documentSymbolProvider: true
@@ -144,7 +137,9 @@ documents.onDidClose(e => {
 // The content of a text document has changed. This event is emitted
 // when the text document first opened or when its content has changed.
 documents.onDidChangeContent(change => {
-	validateTextDocument(change.document);
+
+	//DISABLED but left code in for reference.
+	//validateTextDocument(change.document);
 });
 
 async function validateTextDocument(textDocument: TextDocument): Promise<void> {
@@ -246,13 +241,27 @@ function onDocumentSymbol(documentSymbol: DocumentSymbolParams): SymbolInformati
 	// Create an SymbolInformation[] Object to pass as result
 	const symbolInformationResult: SymbolInformation[] = [];
 
+
+
+
 	// Form local variables for changed doc uri (preliminary code is for DocumentSymbol not workspace-wide)
 	const uri = documentSymbol.textDocument.uri;
 	const thisdoc = documents.get(uri);
 
+	//create headings/containers for outline... not yet working...slow
+	/*
+	const wholedoc = Range.create(0, 0, thisdoc.lineCount, Number.MAX_VALUE);
+	var headingSymbolString = SymbolInformation.create('STRINGS:',SymbolKind.String,wholedoc,uri);
+	symbolInformationResult.push(headingSymbolString);
+	
+	var headingSymbolString = SymbolInformation.create('DB FIELDS:',SymbolKind.Field,wholedoc,uri);
+	symbolInformationResult.push(headingSymbolString);
+	*/
+
 	// Retrieve list of symbols by passing document to parser
 	// ParseItem is (name,symbolKind and Line), but not Range
 	const symbols: ParseItem[] = ParseDocument(thisdoc);
+	
 
 	//for each symbok, construct a SymbolInformation Object, and push to result array
 	for (const symbol of symbols) {
@@ -264,8 +273,8 @@ function onDocumentSymbol(documentSymbol: DocumentSymbolParams): SymbolInformati
 		// Construct symbolInformation Object
 		// TODO: Expand with container name for nesting DB fields, Variables, Strings, keywords?
 		// EG create a dummy symbol as a container for each symbolKind, then nest each symbolKind as child node 
-		const symbolInformation = SymbolInformation.create(symbol.name, symbol.type, symbolRange);
-
+		const symbolInformation = SymbolInformation.create(symbol.name, symbol.type, symbolRange,uri,symbol.container);
+		var conName = symbolInformation.containerName;
 		// Finally, push the symbol to output array
 		symbolInformationResult.push(symbolInformation);
 	}

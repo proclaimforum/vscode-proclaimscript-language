@@ -13,6 +13,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Licensed under the MIT License. See License.txt in the project root for license information.
  * ------------------------------------------------------------------------------------------ */
 const vscode_languageserver_1 = require("vscode-languageserver");
+//import * as utils from './utils';
+//import * as vscode from 'vscode-languageserver';
 const parser_1 = require("./parser");
 // Create a connection for the server. The connection uses Node's IPC as a transport.
 // Also include all preview / proposed LSP features.
@@ -94,7 +96,8 @@ documents.onDidClose(e => {
 // The content of a text document has changed. This event is emitted
 // when the text document first opened or when its content has changed.
 documents.onDidChangeContent(change => {
-    validateTextDocument(change.document);
+    //DISABLED but left code in for reference.
+    //validateTextDocument(change.document);
 });
 function validateTextDocument(textDocument) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -186,6 +189,15 @@ function onDocumentSymbol(documentSymbol) {
     // Form local variables for changed doc uri (preliminary code is for DocumentSymbol not workspace-wide)
     const uri = documentSymbol.textDocument.uri;
     const thisdoc = documents.get(uri);
+    //create headings/containers for outline... not yet working...slow
+    /*
+    const wholedoc = Range.create(0, 0, thisdoc.lineCount, Number.MAX_VALUE);
+    var headingSymbolString = SymbolInformation.create('STRINGS:',SymbolKind.String,wholedoc,uri);
+    symbolInformationResult.push(headingSymbolString);
+    
+    var headingSymbolString = SymbolInformation.create('DB FIELDS:',SymbolKind.Field,wholedoc,uri);
+    symbolInformationResult.push(headingSymbolString);
+    */
     // Retrieve list of symbols by passing document to parser
     // ParseItem is (name,symbolKind and Line), but not Range
     const symbols = parser_1.ParseDocument(thisdoc);
@@ -197,7 +209,8 @@ function onDocumentSymbol(documentSymbol) {
         // Construct symbolInformation Object
         // TODO: Expand with container name for nesting DB fields, Variables, Strings, keywords?
         // EG create a dummy symbol as a container for each symbolKind, then nest each symbolKind as child node 
-        const symbolInformation = vscode_languageserver_1.SymbolInformation.create(symbol.name, symbol.type, symbolRange);
+        const symbolInformation = vscode_languageserver_1.SymbolInformation.create(symbol.name, symbol.type, symbolRange, uri, symbol.container);
+        var conName = symbolInformation.containerName;
         // Finally, push the symbol to output array
         symbolInformationResult.push(symbolInformation);
     }

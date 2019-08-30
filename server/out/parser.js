@@ -12,6 +12,7 @@ function ParseDocument(document) {
     let parseStatus = new ParseStatus();
     //array of already found symbols (strings, DB fields), that should be checked to see if new (eg) variable is inside or not
     const mysyms = [];
+    //make heading symbols (bit of a bodge but expermient)
     // Parse the document, line by line
     for (let i = 0; i < document.lineCount; i++) {
         let oneline = document.getText(vscode.Range.create(i, -1, i, Number.MAX_VALUE));
@@ -19,7 +20,7 @@ function ParseDocument(document) {
         if (oneline[0] === '#') {
             continue;
         }
-        // 2 - find strings. store start and end in mysms array for later
+        // 2 - find STRINGS. store start and end in mysms array for later
         var oneString = findSymbol(oneline, '"');
         if ((oneString[0] !== -1 && oneString[1] !== -1)) {
             //make a MySymbol to record the range of strings for exclusion from other searches
@@ -29,6 +30,7 @@ function ParseDocument(document) {
             let symName = oneline.substr(oneString[0], oneString[1] - oneString[0] + 1);
             let resultSymbol = new ParseItem(symName, vscode.SymbolKind.String);
             resultSymbol.line = i;
+            resultSymbol.container = "STRINGS:";
             symbols.push(resultSymbol);
             let onesym = new MySymbol(resultSymbol, oneString[0], oneString[1]);
             mysyms.push(onesym);
@@ -49,12 +51,16 @@ function ParseDocument(document) {
                 let symName = oneline.substr(oneDB[0], oneDB[1] - oneDB[0] + 1);
                 let resultSymbol = new ParseItem(symName, vscode.SymbolKind.Field);
                 resultSymbol.line = i;
+                resultSymbol.container = "DB FIELDS:";
                 symbols.push(resultSymbol);
                 // also addit to mysms array
                 let onesym = new MySymbol(resultSymbol, oneDB[0], oneDB[1]);
             }
         }
     }
+    // 4 - everything else - split line into words delimited by non-ascii characters excluding {}"
+    //if the word is in the keywords list, then ignore,
+    // otherwise, word is a variable - make into symbol
     return symbols;
 }
 exports.ParseDocument = ParseDocument;
