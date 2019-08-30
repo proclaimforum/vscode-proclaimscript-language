@@ -137,7 +137,6 @@ connection.onInitialized(() => {
 			connection.console.log('Workspace folder change event received.');
 		});
 	}
-
 });
 
 // The example settings
@@ -519,4 +518,3 @@ documents.listen(connection);
 
 // Listen on the connection
 connection.listen();
-

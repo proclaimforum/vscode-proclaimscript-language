@@ -43,6 +43,7 @@ export function ParseDocument(document: vscode.TextDocument, grammar: any): MySy
 			resultItem.line = i;
 			resultItem.container = "STRINGS:";
 
+<<<<<<< HEAD
 			// add on a start and end position to form a MySymbol
 			let oneSymbol: MySymbol = new MySymbol(resultItem, oneString[0], oneString[1]);
 
@@ -59,11 +60,30 @@ export function ParseDocument(document: vscode.TextDocument, grammar: any): MySy
 			var inside: boolean = false;
 			check: for (var symb of mySymbols) {
 				if (symb.withinField(i, oneDB[0])) {
+=======
+			symbols.push(resultItem);
+
+			//add on a start and end postition to form a MySymbol
+			let onesym: MySymbol = new MySymbol(resultItem, oneString[0], oneString[1]);
+			mysyms.push(onesym);
+		}
+		// 3- DB fields
+		// find DB fields like you do with strings,  
+		var oneDB: [number, number] = findSymbol(oneline, '{', '}');
+		if (oneDB[0] !== -1 && oneDB[1] !== -1) {
+
+
+			// check if this is inside an existing  symbol
+			var inside: boolean = false;
+			check: for (var symb of mysyms) {
+				if (symb.withinField(i,oneDB[0])) {
+>>>>>>> LSP implementation (#4)
 					inside = true;
 					break check;
 				}
 			}
 			if (!inside) {
+<<<<<<< HEAD
 				let symName: string = oneLine.substr(oneDB[0], oneDB[1] - oneDB[0] + 1);
 				let resultSymbol = new ParseItem(symName, vscode.SymbolKind.Field);
 				resultSymbol.line = i;
@@ -150,18 +170,65 @@ export function ParseDocument(document: vscode.TextDocument, grammar: any): MySy
 
 
 
+=======
+				let symName: string = oneline.substr(oneDB[0], oneDB[1] - oneDB[0] + 1);
+				let resultSymbol = new ParseItem(symName, vscode.SymbolKind.Field);
+				resultSymbol.line = i;
+				resultSymbol.container = "DB FIELDS:";
+				symbols.push(resultSymbol);
+
+				// also addit to mysms array
+				let onesym: MySymbol = new MySymbol(resultSymbol, oneDB[0], oneDB[1]);
+				mysyms.push(onesym);
+			}
+		}
+
+>>>>>>> LSP implementation (#4)
 	}
 	// 4 - everything else - split line into words delimited by non-ascii characters excluding {}"
 	//if the word is in the keywords list, then ignore,
 	// otherwise, word is a variable - make into symbol
 
+<<<<<<< HEAD
 	//return array of MySymbol items to calling Server
 	return mySymbols;
+=======
+
+	return mysyms;
+>>>>>>> LSP implementation (#4)
 }
 // find all strings (a string may want to display a field name or curly braces)
 // find all db fields that aren't in strings
 // find all other words by delim, if it's not a keyword, then it's a variable
 
+<<<<<<< HEAD
+=======
+// 2 - find all db fields. store as item with symbol. Extend class to include start and end position
+// function findblock (line, delim): returns item or null
+// find start brace. find end brace - everything inbetween is classed as a DBfield
+// if we reach end of string before then item is not classed as field
+
+// find all STRINGS
+//find start quote, 
+
+// 3 - find all variables
+// what is a variable - it's all other text not inside a DBfield, delimited by (){}\s,
+
+//function get word:
+//for each string.split(bydelim)
+//start = current pointer
+//end = string.length
+
+//if it is a KEYWORD then ignore
+//if it is inside a DB field then ignore
+//otherwise it's a variable
+
+//set start = end (+1?)
+//
+
+
+// constants?
+>>>>>>> LSP implementation (#4)
 
 
 // 3 - 
@@ -171,6 +238,7 @@ export function ParseDocument(document: vscode.TextDocument, grammar: any): MySy
 
 // if it's a keyword, ignore it
 
+<<<<<<< HEAD
 
 class oneWord {
 	public word: string;
@@ -183,6 +251,27 @@ class oneWord {
 
 function findSymbol(pLine: string, pDelimOpen: string, pDelimClose?: string): [number, number] {
 	// returns start and end position of string in a line enclosed by delimiter(s)
+=======
+//if we are in DB field mode, check for field end
+
+//if we are in string mode, check for string end
+
+// 2 - DB Fields
+
+
+// search for opening brace
+// search for closing brace...
+// if closing brace then mark as DB field
+
+
+// 3 - keywords (any way to link this to languagefile?)
+
+// 4 - 
+
+
+function findSymbol(pLine: string, pDelimOpen: string, pDelimClose?: string): [number, number] {
+	// returns start and end position of string in a line
+>>>>>>> LSP implementation (#4)
 	let i: number = 0;
 	let nStart: number = -1;
 	let nEnd: number = -1;
