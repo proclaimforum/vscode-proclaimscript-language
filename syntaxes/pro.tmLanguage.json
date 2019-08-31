@@ -34,12 +34,12 @@
 			
 		},
 		"codeblock": {
-			"foldingStartMarker": "\\b(IF|ELSEIF|WHILE)\\b",
-			"foldingEndMarker": "\\b(END)\\b",
+			"foldingStartMarker": "(?i)\\b(IF|ELSEIF|WHILE)\\b",
+			"foldingEndMarker": "(?i)\\b(END)\\b",
 
 			"patterns": [{
 				"name": "keyword.control.pro",
-				"match": "\\b(IF|THEN|ELSE|ELSEIF|END|WHILE|FOR|DO)\\b"
+				"match": "(?i)\\b(IF|THEN|ELSE|ELSEIF|END|WHILE|FOR|DO)\\b"
 			}]
 		},
 		"strings": {
