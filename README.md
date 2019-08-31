@@ -70,6 +70,9 @@ Pull requests welcomed
 4. open the examples/test.pro file to test out syntax highlighting. 
 5. make changes to the extension in the main VSCode window, reloading to see the effect on the extension
 
+## Acknowledgements
+Framework inspired by https://github.com/chriscamicas/vscode-abl
+
 ## License
 GNU GPL v3.0 
 See LICENSE file for full details
