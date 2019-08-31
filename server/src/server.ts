@@ -248,7 +248,7 @@ function onDocumentSymbol(documentSymbol: DocumentSymbolParams): SymbolInformati
 	const uri = documentSymbol.textDocument.uri;
 	const thisdoc = documents.get(uri);
 
-	//create headings/containers for outline... not yet working...slow
+	//create headings/containers for outline... not yet working...
 	/*
 	const wholedoc = Range.create(0, 0, thisdoc.lineCount, Number.MAX_VALUE);
 	var headingSymbolString = SymbolInformation.create('STRINGS:',SymbolKind.String,wholedoc,uri);
@@ -259,10 +259,10 @@ function onDocumentSymbol(documentSymbol: DocumentSymbolParams): SymbolInformati
 	*/
 
 	// Retrieve list of symbols by passing document to parser
-	// ParseItem is (name,symbolKind and Line), but not Range
+	// ParseItem is (name,symbolKind and Line), but not Range. Extended by MySymbol to include start and end char pos in line
+
 	const symbols: MySymbol[] = ParseDocument(thisdoc);
 	
-
 	//for each symbok, construct a SymbolInformation Object, and push to result array
 	for (const symbol of symbols) {
 		
@@ -271,10 +271,9 @@ function onDocumentSymbol(documentSymbol: DocumentSymbolParams): SymbolInformati
 		const symbolRange = Range.create(symbol.parseItem.line, symbol.start, symbol.parseItem.line, symbol.end);
 
 		// Construct symbolInformation Object
-		// TODO: Expand with container name for nesting DB fields, Variables, Strings, keywords?
-		// EG create a dummy symbol as a container for each symbolKind, then nest each symbolKind as child node 
 		const symbolInformation = SymbolInformation.create(symbol.parseItem.name, symbol.parseItem.type, symbolRange,uri,symbol.parseItem.container);
-		var conName = symbolInformation.containerName;
+		//var conName = symbolInformation.containerName;
+
 		// Finally, push the symbol to output array
 		symbolInformationResult.push(symbolInformation);
 	}
