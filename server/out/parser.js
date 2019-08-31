@@ -57,6 +57,7 @@ function ParseDocument(document) {
                 mySymbols.push(oneSymbol);
             }
         }
+        //4 - Variables
         var startofword = 0;
         var pattern = /[\{\}\(\)\s\,]/g;
         var match;

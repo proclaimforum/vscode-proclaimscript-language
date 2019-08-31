@@ -70,8 +70,7 @@ export function ParseDocument(document: vscode.TextDocument): MySymbol[] {
 			}
 		}
 
-
-
+//4 - Variables
 
 		var startofword: number = 0;
 		var pattern = /[\{\}\(\)\s\,]/g;
