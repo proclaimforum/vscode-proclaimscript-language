@@ -151,6 +151,10 @@
 {
 					"name": "keyword.other.z",
 					"match": "(?i)(?<![\\w-])(ZIP)"
+				},
+				{
+					"name": "keyword.other.patterns",
+					"match": "(?i)(?<![\\w-])((IF|THEN|ELSE|ELSEIF|END|WHILE|FOR|DO))"
 				}
 			]
 
