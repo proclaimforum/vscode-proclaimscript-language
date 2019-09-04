@@ -45,6 +45,12 @@
                 }
             }
         },
+        "commands": [
+            {
+              "command": "checkSyntax",
+              "title": "checkSyntax"
+            }
+          ],
         "languages": [
             {
                 "id": "pro",
@@ -65,6 +71,13 @@
                 "path": "./syntaxes/pro.tmLanguage.json"
             }
         ],
+        "views": {
+            "explorer": [{
+                "id": "openhabItems",
+                "name": "openHAB Items",
+                "when": "resourceLangId == pro"
+            }]
+        },
         "snippets": [
             {
                 "language": "pro",

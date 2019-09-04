@@ -13,7 +13,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * Licensed under the MIT License. See License.txt in the project root for license information.
  * ------------------------------------------------------------------------------------------ */
 const vscode_languageserver_1 = require("vscode-languageserver");
-//import * as utils from './utils';
+//grab array of keywords here. can we get this from the client?
+const grammar = require("./pro.tmLanguage.json");
 //import * as vscode from 'vscode-languageserver';
 const parser_1 = require("./parser");
 // Create a connection for the server. The connection uses Node's IPC as a transport.
@@ -37,12 +38,18 @@ connection.onInitialize((params) => {
     return {
         capabilities: {
             textDocumentSync: documents.syncKind,
+            // code action - only way to return a command with a link to doc?
+            codeActionProvider: true,
             // Tell the client that the server supports code completion
             completionProvider: {
                 resolveProvider: true
             },
             // Tell the client that the server supports document Symbols
-            documentSymbolProvider: true
+            documentSymbolProvider: true,
+            // and can execute commands (for syntax checker)
+            executeCommandProvider: {
+                "commands": ["checkSyntax"]
+            }
         }
     };
 });
@@ -179,6 +186,20 @@ connection.onCompletionResolve((item) => {
     }
     return item;
 });
+connection.onCodeAction((codeActionParams) => {
+    //all this is a bodge to get the uri through to the calling command, so we can parse symbols and presend dialog box server-side
+    let codeActions = [];
+    let codeAction = { title: "Check Syntax", kind: vscode_languageserver_1.CodeActionKind.QuickFix };
+    var doc = documents.get(codeActionParams.textDocument.uri);
+    var args = [];
+    args.push(codeActionParams.textDocument.uri.toString());
+    var command = vscode_languageserver_1.Command.create("checkSyntax", "checkSyntax", codeActionParams.textDocument.uri.toString());
+    codeAction.command = command;
+    //	var oneCommand = Command.create("my syntax checker","checkSyntax",args);
+    //command.push(oneCommand);
+    codeActions.push(codeAction);
+    return codeActions;
+});
 connection.onDocumentSymbol(onDocumentSymbol);
 //change to async then promise.resolve
 function onDocumentSymbol(documentSymbol) {
@@ -200,7 +221,8 @@ function onDocumentSymbol(documentSymbol) {
     */
     // Retrieve list of symbols by passing document to parser
     // ParseItem is (name,symbolKind and Line), but not Range. Extended by MySymbol to include start and end char pos in line
-    const symbols = parser_1.ParseDocument(thisdoc);
+    // pass it also our grammar json to identify keyworkds
+    const symbols = parser_1.ParseDocument(thisdoc, grammar);
     //for each symbok, construct a SymbolInformation Object, and push to result array
     for (const symbol of symbols) {
         // What is the document range that covers this symbol? 
@@ -235,6 +257,96 @@ connection.onDidCloseTextDocument((params) => {
 */
 // Make the text document manager listen on the connection
 // for open, change and close text document events
+connection.onExecuteCommand(onExecuteCommand);
+function onExecuteCommand(params, pToken) {
+    return __awaiter(this, void 0, void 0, function* () {
+        console.log("run command");
+        switch (params.command) {
+            case "checkSyntax":
+                // we have passed the doc URI in the ExecuteCommandParams as an argument.
+                // (this seems to have to come via a CodeAction rather than a plain UI ExecuteCommand in order that
+                // the UI can pass the document url )
+                // Get the DocumentSymols 
+                let uri = params.arguments[0];
+                const thisdoc = documents.get(uri);
+                let documentSymbol = { textDocument: thisdoc };
+                var symbolInformationResult = [];
+                symbolInformationResult = onDocumentSymbol(documentSymbol);
+                var syntaxmessage;
+                var myarray = [];
+                var strings = "";
+                var fields = "";
+                var variables = "";
+                var stringsA = [];
+                var fieldsA = [];
+                var variablesA = [];
+                //Format the symbols into a Syntax Checker result string
+                for (let sym of symbolInformationResult) {
+                    //syntaxmessage += sym.containerName;
+                    myarray.push({
+                        "type": sym.containerName,
+                        "value": sym.name
+                    });
+                    if (sym.containerName == "STRINGS:") {
+                        stringsA.push(sym.name);
+                        strings += sym.name + "\r\n";
+                    }
+                    if (sym.containerName == "DB FIELDS:") {
+                        fields += sym.name + "\r\n";
+                        fieldsA.push(sym.name);
+                    }
+                    if (sym.containerName == "VARIABLES:") {
+                        variables += sym.name + "\r\n";
+                        variablesA.push(sym.name);
+                    }
+                }
+                //syntaxmessage = '*****     STRINGS     *****\r\n' + strings + "\r\n" + "*****     DB FIELDS     *****\r\n" + fields + "\r\n" + "*****     VARIABLES     *****\r\n" + variables;
+                const distinctStrings = [...new Set(stringsA)];
+                const distinctFields = [...new Set(fieldsA)];
+                const distinctVars = [...new Set(variablesA)];
+                syntaxmessage = '*****     STRINGS       *****\r\n' + distinctStrings.join('\r\n') + '\r\n\r\n';
+                syntaxmessage += '*****     DB FIELDS     *****\r\n' + distinctFields.join('\r\n') + '\r\n\r\n';
+                syntaxmessage += '*****     VARIABLES     *****\r\n' + distinctVars.join('\r\n') + '\r\n\r\n';
+                //popup syntax
+                // hmm, doesn't allow multiline.
+                //connection.window.showErrorMessage(syntaxmessage);
+                //instead, make a new tab in the workspace
+                //some text
+                //const textToAdd: string = "test string";
+                //create new WorkspaceChange obj
+                //let workspaceChange = new WorkspaceChange();
+                //uri of new file
+                let newuri = 'file:///c:/temp/syntaxcheck.txt';
+                //construct a CreateFile variable
+                let createFile = { kind: 'create', uri: newuri };
+                //and make into array
+                let createFiles = [];
+                createFiles.push(createFile);
+                //make a new workspaceEdit variable, specifying a createFile document change
+                var workspaceEdit = { documentChanges: createFiles };
+                //pass to client to apply this edit
+                yield connection.workspace.applyEdit(workspaceEdit);
+                //To insert the text (and pop up the window), create array of TextEdit
+                let textEdit = [];
+                //let document = documents.get(newuri);
+                let documentRange = vscode_languageserver_1.Range.create(0, 0, Number.MAX_VALUE, Number.MAX_VALUE);
+                //populate with the text, and where to insert (surely this is what workspaceChange.insert is for?)
+                let textEdits = { range: documentRange, newText: syntaxmessage };
+                //Range.create(Position.create(0, 1),Position.create(0, 1)), newText: syntaxmessage};
+                textEdit.push(textEdits);
+                //make a new array of textDocumentEdits, containing our TextEdit (range and text)
+                let textDocumentEdit = vscode_languageserver_1.TextDocumentEdit.create({ uri: newuri, version: 1 }, textEdit);
+                let textDocumentEdits = [];
+                textDocumentEdits.push(textDocumentEdit);
+                //set  our workspaceEdit variable to this new TextDocumentEdit
+                workspaceEdit = { documentChanges: textDocumentEdits };
+                //and finally apply this to our workspace.
+                // we can probably do this some more elegant way / in
+                connection.workspace.applyEdit(workspaceEdit);
+                break;
+        }
+    });
+}
 documents.listen(connection);
 // Listen on the connection
 connection.listen();

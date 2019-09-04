@@ -6,10 +6,11 @@ const PARSE_INSTRUCTION = 1;
 const PARSE_DBFIELD = 2;
 const PARSE_STRING = 3;
 //export function ParseDocument(document: vscode.TextDocument, token: vscode.CancellationToken): ParseItem[] {
-function ParseDocument(document) {
+function ParseDocument(document, grammar) {
     // this stores all the symbols we create
     // TODO: don't need to go via ParseItem any longer.. 
     //const symbols: ParseItem[] = [];
+    //console.log(grammar.repository.keywords.patterns);
     // Make an array of Items (strings, DB fields) and their positions
     // that should be checked to see if new (eg) variable is inside or not
     const mySymbols = [];
@@ -58,12 +59,38 @@ function ParseDocument(document) {
             }
         }
         //4 - Variables
+        // need some method of ignoring keywords from lookup
+        // TextMate Grammar is defined in CLIENT not server
+        // is there a way of either having the server define the syntax highlight grammar, or retrieve the TMgrammar keywords
+        // via the language server?
+        //alternatively, need to leave instructions to copy and chages to language.tmgrammar to the server dir too
         var startofword = 0;
+        // Word delimiter
         var pattern = /[\{\}\(\)\s\,]/g;
         var match;
+        // For each word:
         while (match = pattern.exec(oneLine)) {
             var word = oneLine.slice(startofword, match.index);
-            if (word.length > 0 && word.match(/^[a-zA-Z]/)) {
+            //TODO parse a servercopy of the pro.tmLanguage.json
+            // for eack keywords: if word.match(pattern) then exclude = true else exclude = false
+            // (maybe move this to post-check if inside a DB field or string for speed...?
+            var isKeyword = false;
+            for (let node of grammar.repository.keywords.patterns) {
+                //node is a name/match pair of a given keyword
+                //node.match is a regexp but with ?i case insensitive flag which doesn't work here...
+                // change (?i)
+                var replace = /\(\?i\)/;
+                if (node["match"].match(replace)) {
+                    var newMatch = node["match"].replace(replace, "");
+                }
+                if (word.toUpperCase().match(newMatch)) {
+                    console.log("Keyword found: " + word);
+                    isKeyword = true;
+                    break;
+                }
+            }
+            // If word is small or doesn't begin with alpha, or is a keyword, then discard as variable name
+            if (word.length > 0 && word.match(/^[a-zA-Z]/) && !isKeyword) { // and exclude = false:
                 // check if inside any existing symbols on this line:
                 var inside = false;
                 check: for (var symb of mySymbols) {
@@ -76,7 +103,7 @@ function ParseDocument(document) {
                     let symName = word;
                     let resultSymbol = new ParseItem(symName, vscode.SymbolKind.Variable);
                     resultSymbol.line = i;
-                    resultSymbol.container = "DB FIELDS:";
+                    resultSymbol.container = "VARIABLES:";
                     //symbols.push(resultSymbol);
                     // also addit to mysms array
                     let oneSymbol = new MySymbol(resultSymbol, startofword, match.index);
