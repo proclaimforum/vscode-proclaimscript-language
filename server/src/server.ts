@@ -106,7 +106,7 @@ connection.onInitialize((params: InitializeParams) => {
 	return {
 		capabilities: {
 			textDocumentSync: documents.syncKind,
-			
+
 			// code action - only way to return a command with a link to doc?
 			codeActionProvider: true,
 			// Tell the client that the server supports code completion
@@ -117,7 +117,7 @@ connection.onInitialize((params: InitializeParams) => {
 
 			// Tell the client that the server supports document Symbols
 			documentSymbolProvider: true,
-			
+
 			// and can execute commands (for syntax checker)
 			executeCommandProvider: {
 				"commands": ["checkSyntax"]
@@ -137,18 +137,20 @@ connection.onInitialized(() => {
 			connection.console.log('Workspace folder change event received.');
 		});
 	}
-	
+
 });
 
 // The example settings
 interface ExampleSettings {
 	maxNumberOfProblems: number;
+	enableSyntaxCheckTab: boolean;
+	enableSyntaxCheckCodeAction: boolean;
 }
 
 // The global settings, used when the `workspace/configuration` request is not supported by the client.
 // Please note that this is not the case when using this server with the client provided in this example
 // but could happen with other clients.
-const defaultSettings: ExampleSettings = { maxNumberOfProblems: 1000 };
+const defaultSettings: ExampleSettings = { maxNumberOfProblems: 1000, enableSyntaxCheckTab: true, enableSyntaxCheckCodeAction: false };
 let globalSettings: ExampleSettings = defaultSettings;
 
 // Cache the settings of all open documents
@@ -202,16 +204,22 @@ documents.onDidChangeContent(change => {
 });
 
 async function checkDocumentSyntax(textDocument: TextDocument): Promise<void> {
-	var doc = documents.get(textDocument.uri);
-	//monitor only .pro files
-	//how do we retrieve this from the client language setting?
-	if (doc.languageId=='pro'){
-	var args: string[] = [];
-	args.push(textDocument.uri.toString());
-	//var command: Command = Command.create("checkSyntax", "checkSyntax", codeActionParams.textDocument.uri.toString());
-	var execute:ExecuteCommandParams= {command: "checkSyntax",arguments: args};
-	var token:CancellationToken;
-	onExecuteCommand(execute,token);
+	//if syntaxcheck tab is enabled:
+	let settings = await getDocumentSettings(textDocument.uri);
+	if (settings.enableSyntaxCheckTab) {
+		var doc = documents.get(textDocument.uri);
+		//monitor only .pro files
+		//how do we retrieve this from the client language setting?
+		if (doc.languageId == 'pro') {
+			
+			//pass document name to syntax checker
+			var args: string[] = [];
+			args.push(textDocument.uri.toString());
+			
+			var execute: ExecuteCommandParams = { command: "checkSyntax", arguments: args };
+			var token: CancellationToken;
+			onExecuteCommand(execute, token);
+		}
 	}
 }
 
@@ -220,8 +228,8 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
 	let settings = await getDocumentSettings(textDocument.uri);
 
 	// The validator creates diagnostics for all uppercase words length 2 and more
-	
-	
+
+
 	let text = textDocument.getText();
 	let pattern = /\b[A-Z]{2,}\b/g;
 	let m: RegExpExecArray | null;
@@ -418,9 +426,9 @@ async function onExecuteCommand(params: ExecuteCommandParams, pToken: Cancellati
 			var fields: string = "";
 			var variables: string = "";
 
-			var stringsA:string[]=[];
-			var fieldsA:string[]=[];
-			var variablesA:string[]=[];
+			var stringsA: string[] = [];
+			var fieldsA: string[] = [];
+			var variablesA: string[] = [];
 
 
 			//Format the symbols into a Syntax Checker result string
@@ -447,11 +455,11 @@ async function onExecuteCommand(params: ExecuteCommandParams, pToken: Cancellati
 			//syntaxmessage = '*****     STRINGS     *****\r\n' + strings + "\r\n" + "*****     DB FIELDS     *****\r\n" + fields + "\r\n" + "*****     VARIABLES     *****\r\n" + variables;
 			const distinctStrings = [...new Set(stringsA)];
 			const distinctFields = [...new Set(fieldsA)];
-			const distinctVars=[...new Set(variablesA)];
+			const distinctVars = [...new Set(variablesA)];
 
-			syntaxmessage  = '*****     STRINGS       *****\r\n' + distinctStrings.join('\r\n') + '\r\n\r\n';
-			syntaxmessage += '*****     DB FIELDS     *****\r\n' + distinctFields.join('\r\n')+ '\r\n\r\n';
-			syntaxmessage += '*****     VARIABLES     *****\r\n' + distinctVars.join('\r\n')+ '\r\n\r\n';
+			syntaxmessage = '*****     STRINGS       *****\r\n' + distinctStrings.join('\r\n') + '\r\n\r\n';
+			syntaxmessage += '*****     DB FIELDS     *****\r\n' + distinctFields.join('\r\n') + '\r\n\r\n';
+			syntaxmessage += '*****     VARIABLES     *****\r\n' + distinctVars.join('\r\n') + '\r\n\r\n';
 
 			//popup syntax
 

@@ -26,6 +26,16 @@
             "type": "object",
             "title": "Example configuration",
             "properties": {
+                "languageServerExample.enableSyntaxCheckCodeAction":{
+                    "type":"boolean",
+                    "default":false,
+                    "description": "Controls whether the syntax check can be run from inline Quick Fix"
+                },
+                "languageServerExample.enableSyntaxCheckTab":{
+                    "type":"boolean",
+                    "default":true,
+                    "description": "Controls whether the \"syntaxcheck\" tab is enabled"
+                },
                 "languageServerExample.maxNumberOfProblems": {
                     "scope": "resource",
                     "type": "number",
