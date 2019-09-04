@@ -106,7 +106,7 @@ connection.onInitialize((params: InitializeParams) => {
 	return {
 		capabilities: {
 			textDocumentSync: documents.syncKind,
-
+			
 			// code action - only way to return a command with a link to doc?
 			codeActionProvider: true,
 			// Tell the client that the server supports code completion
@@ -117,6 +117,7 @@ connection.onInitialize((params: InitializeParams) => {
 
 			// Tell the client that the server supports document Symbols
 			documentSymbolProvider: true,
+			
 			// and can execute commands (for syntax checker)
 			executeCommandProvider: {
 				"commands": ["checkSyntax"]
@@ -136,6 +137,7 @@ connection.onInitialized(() => {
 			connection.console.log('Workspace folder change event received.');
 		});
 	}
+	
 });
 
 // The example settings
@@ -151,6 +153,10 @@ let globalSettings: ExampleSettings = defaultSettings;
 
 // Cache the settings of all open documents
 let documentSettings: Map<string, Thenable<ExampleSettings>> = new Map();
+
+
+
+
 
 connection.onDidChangeConfiguration(change => {
 	if (hasConfigurationCapability) {
@@ -192,15 +198,30 @@ documents.onDidChangeContent(change => {
 
 	//DISABLED but left code in for reference.
 	//validateTextDocument(change.document);
+	checkDocumentSyntax(change.document);
 });
 
-
+async function checkDocumentSyntax(textDocument: TextDocument): Promise<void> {
+	var doc = documents.get(textDocument.uri);
+	//monitor only .pro files
+	//how do we retrieve this from the client language setting?
+	if (doc.languageId=='pro'){
+	var args: string[] = [];
+	args.push(textDocument.uri.toString());
+	//var command: Command = Command.create("checkSyntax", "checkSyntax", codeActionParams.textDocument.uri.toString());
+	var execute:ExecuteCommandParams= {command: "checkSyntax",arguments: args};
+	var token:CancellationToken;
+	onExecuteCommand(execute,token);
+	}
+}
 
 async function validateTextDocument(textDocument: TextDocument): Promise<void> {
 	// In this simple example we get the settings for every validate run.
 	let settings = await getDocumentSettings(textDocument.uri);
 
 	// The validator creates diagnostics for all uppercase words length 2 and more
+	
+	
 	let text = textDocument.getText();
 	let pattern = /\b[A-Z]{2,}\b/g;
 	let m: RegExpExecArray | null;
@@ -245,7 +266,7 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
 
 connection.onDidChangeWatchedFiles(_change => {
 	// Monitored files have change in VSCode
-	connection.console.log('We received an file change event');
+	console.log('We received an file change event');
 });
 
 // This handler provides the initial list of the completion items.
@@ -300,7 +321,10 @@ connection.onCodeAction((codeActionParams: CodeActionParams): CodeAction[] => {
 	//	var oneCommand = Command.create("my syntax checker","checkSyntax",args);
 	//command.push(oneCommand);
 	codeActions.push(codeAction);
-	return codeActions;
+
+	//DISABLED in preference to onDocumentChange trigger
+	//return codeActions;
+	return;
 });
 
 connection.onDocumentSymbol(onDocumentSymbol);

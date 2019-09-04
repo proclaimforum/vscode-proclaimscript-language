@@ -105,7 +105,23 @@ documents.onDidClose(e => {
 documents.onDidChangeContent(change => {
     //DISABLED but left code in for reference.
     //validateTextDocument(change.document);
+    checkDocumentSyntax(change.document);
 });
+function checkDocumentSyntax(textDocument) {
+    return __awaiter(this, void 0, void 0, function* () {
+        var doc = documents.get(textDocument.uri);
+        //monitor only .pro files
+        //how do we retrieve this from the client language setting?
+        if (doc.languageId == 'pro') {
+            var args = [];
+            args.push(textDocument.uri.toString());
+            //var command: Command = Command.create("checkSyntax", "checkSyntax", codeActionParams.textDocument.uri.toString());
+            var execute = { command: "checkSyntax", arguments: args };
+            var token;
+            onExecuteCommand(execute, token);
+        }
+    });
+}
 function validateTextDocument(textDocument) {
     return __awaiter(this, void 0, void 0, function* () {
         // In this simple example we get the settings for every validate run.
@@ -153,7 +169,7 @@ function validateTextDocument(textDocument) {
 }
 connection.onDidChangeWatchedFiles(_change => {
     // Monitored files have change in VSCode
-    connection.console.log('We received an file change event');
+    console.log('We received an file change event');
 });
 // This handler provides the initial list of the completion items.
 connection.onCompletion((_textDocumentPosition) => {
@@ -198,7 +214,9 @@ connection.onCodeAction((codeActionParams) => {
     //	var oneCommand = Command.create("my syntax checker","checkSyntax",args);
     //command.push(oneCommand);
     codeActions.push(codeAction);
-    return codeActions;
+    //DISABLED in preference to onDocumentChange trigger
+    //return codeActions;
+    return;
 });
 connection.onDocumentSymbol(onDocumentSymbol);
 //change to async then promise.resolve
