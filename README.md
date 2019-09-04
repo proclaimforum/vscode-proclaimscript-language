@@ -10,7 +10,8 @@ for Eclipse Proclaim Maths Script
 * Syntax highlighting, including Proclaim Maths Keywords featured in versions up to 3.4.02
 * IF THEN ELSE code folding and indentation
 * Snippets framework for example maths layouts
-* Basic Outline Symbol detection
+* OUTLINE Symbol detection for DB fields, variables and strings
+* Basic Syntax Checking - list all DB fields, variables and strings (helpful in spotting typos)
 
 ## Installation
 
@@ -19,7 +20,7 @@ Search for "Proclaim Maths"
 
 To install a development version directly from the GIT respository files:
 1. Create a directory  %userprofile%/.vscode/extensions/proclaimscript
-2. Copy contents of this repository into it, restart VSCode
+2. Copy/clone contents of this repository into it, restart VSCode
 3. Create a blank file, and save it with extension .pro (or load one previously saved from Proclaim Maths editor). The syntax highlighter will then recognise and parse the code.
 
 ## Requirements
@@ -28,7 +29,11 @@ Written on VS Code version 1.36.0 Node.js 10.11.0.
 
 ## Extension Settings
 
-No specific settings at this time.
+- enableSyntaxCheckTab:
+if true, then a new tab is opened called 'syntaxcheck' that lists all DB fields, variables and strings. 
+
+- enableSyntaxCheckCodeAction: 
+if true, then the syntax check tab is only opened/refreshed when you click the QuickAction lighbulb inline and choose 'Check Syntax'
 
 ## Known Issues
 
