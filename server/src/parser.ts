@@ -25,12 +25,15 @@ export function ParseDocument(document: vscode.TextDocument, grammar: any): MySy
 
 		let oneLine = document.getText(vscode.Range.create(i, -1, i, Number.MAX_VALUE));
 
+		/////////////////////////
 		// 1 - Exclude comment lines
+		/////////////////////////
 		if (oneLine[0] === '#') {
 			continue;
 		}
-
+		/////////////////////////
 		// 2 - find STRINGS. store start and end in mysms array for later
+		/////////////////////////
 		var oneString: [number, number] = findSymbol(oneLine, '"');
 		if ((oneString[0] !== -1 && oneString[1] !== -1)) {
 
@@ -45,7 +48,9 @@ export function ParseDocument(document: vscode.TextDocument, grammar: any): MySy
 
 			mySymbols.push(oneSymbol);
 		}
+		/////////////////////////
 		// 3- DB fields
+		/////////////////////////
 		// find DB fields like you do with strings,  
 		var oneDB: [number, number] = findSymbol(oneLine, '{', '}');
 		if (oneDB[0] !== -1 && oneDB[1] !== -1) {
@@ -70,14 +75,15 @@ export function ParseDocument(document: vscode.TextDocument, grammar: any): MySy
 				mySymbols.push(oneSymbol);
 			}
 		}
-
+		/////////////////////
 		//4 - Variables
+		/////////////////////
 		// need some method of ignoring keywords from lookup
+		// yet exclude keywords if they form a variable name...
 		// TextMate Grammar is defined in CLIENT not server
 		// is there a way of either having the server define the syntax highlight grammar, or retrieve the TMgrammar keywords
 		// via the language server?
 		//alternatively, need to leave instructions to copy and chages to language.tmgrammar to the server dir too
-
 
 		var startofword: number = 0;
 		// Word delimiter
@@ -99,8 +105,8 @@ export function ParseDocument(document: vscode.TextDocument, grammar: any): MySy
 				
 				// change (?i)
 				var replace = /\(\?i\)/;
-				
 				if (node["match"].match(replace)){
+					//var newMatch:string = node["match"].replace(replace,"(?<!.)");
 					var newMatch:string = node["match"].replace(replace,"");
 					
 				}

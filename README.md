@@ -29,16 +29,21 @@ Written on VS Code version 1.36.0 Node.js 10.11.0.
 
 ## Extension Settings
 
+(click on View->Extensions, then the settings 'gear' next to Proclaim Maths Script extension)
+
 - enableSyntaxCheckTab:
 if true, then a new tab is opened called 'syntaxcheck' that lists all DB fields, variables and strings. 
 
 - enableSyntaxCheckCodeAction: 
 if true, then the syntax check tab is only opened/refreshed when you click the QuickAction lighbulb inline and choose 'Check Syntax'
 
+
 ## Known Issues
 
 * IF ELSE autocompletion competition with C/C++ LSP makes writing IF ELSE blocks a little clunky
 * autocomplete / folding of IF ELSE is case sensitive.
+* unknown handling of multiple .pro files open in one editor 
+* (DEV) if you modify the pro.tmLanguage.json in the client, you must copy the file to the /server/src location too
 
 ## Release Notes
 
@@ -47,13 +52,16 @@ First release 0.1.1 on 13/08/2019
 
 ## TODO
 
+* have the server receive the tmLanguage.json from the client in order to parse symbols on the server (define symbols on server?)
 * theme/colouring to match Proclaim editor when VSCode theme is white background
 * more snippets for sample keywords, based on Example Maths from ProclaimForum.co.uk
 * Intellisense / autocomplete for inline help for keywords
-* improve DocumentSymbol parsing to include variables.
-* 'Problems' LSP for e.g. mismatched 
-* create new Command to replicate the old 'syntax check' output that displays a summary of all DB fields, variables and strings.
+~~* improve DocumentSymbol parsing to include variables.~~
+* 'Problems' LSP for e.g. mismatched braces
+~~* create new Command to replicate the old 'syntax check' output that displays a summary of all DB fields, variables and strings.~~
 * hook into live Proclaim system to syntax check DB field names
+* autocapitalise keywords
+* remove remnants of example LSP framework
 
 
 ## Contributing
@@ -65,13 +73,14 @@ Pull requests welcomed
 * Syntax highlighting rules are defined in pro.tmlLanguage.json
 * Indentation rules are defined in language-configuration.json
 * Snippets (sample code/Intellisense) are defined in snippets.json
-* Symbol parsing (for OUTLINE view) are defined in  in server/src/parser.ts
+* Symbol parsing rules (for OUTLINE view and syntax check) are defined in  in server/src/parser.ts
 * In Proclaim v3.4+, the definition of the built-in syntax highlighter (CodeJock Syntax Edit) is stored in ConfigEditor/Schemas/_Proclaim.schclass
 * To see how the extension has parsed a specific line/keywork, go View-->Command Palette.. Developer: Inspect TM Scopes
 * For contributing/making changes to the extension, instead of 'installing' the script into your extensions directory try running the extension in the VSCode Extension Development Host 
-1. copy /proclaimscript into %userprofile/proclaimscript
-2. open launch.json in VSCode
-3. hit F5 to open the Extension Development Host
+1. copy/clone into %userprofile/proclaimscript
+2. open /server/src/server.ts  in VSCode
+3. hit F5 to open the Extension Development Host, selecting 'client+server'
+This will spawn the Language server client, launch the server and connect to it for debugging
 4. open the examples/test.pro file to test out syntax highlighting. 
 5. make changes to the extension in the main VSCode window, reloading to see the effect on the extension
 
