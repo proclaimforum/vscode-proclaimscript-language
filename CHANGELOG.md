@@ -32,3 +32,5 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ### Added
  - syntax check list of variables, DB fields and strings, outputs to tab or QuickFix
  -- see package configuration options: enableSyntaxCheckTab and enableSyntaxCheckCodeAction
+ ### Fixed
+ - variable name symbols where keyword formed part of the symbol (in both client tmLanguage and parser)
