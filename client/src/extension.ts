@@ -37,21 +37,11 @@ export function activate(context: ExtensionContext) {
 
 	// Options to control the language client
 	let clientOptions: LanguageClientOptions = {
-<<<<<<< HEAD
-<<<<<<< HEAD
 		
 		// Register the server for plain text documents
 		documentSelector: [{ scheme: 'file', language: 'pro' }],
 	
 		
-=======
-		// Register the server for plain text documents
-		documentSelector: [{ scheme: 'file', language: 'pro' }],
->>>>>>> LSP implementation (#4)
-=======
-		// Register the server for plain text documents
-		documentSelector: [{ scheme: 'file', language: 'pro' }],
->>>>>>> master
 		synchronize: {
 			// Notify the server about file changes to '.clientrc files contained in the workspace
 			fileEvents: workspace.createFileSystemWatcher('**/.clientrc')
