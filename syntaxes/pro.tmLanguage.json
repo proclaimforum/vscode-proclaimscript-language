@@ -34,12 +34,12 @@
 			
 		},
 		"codeblock": {
-			"foldingStartMarker": "(?i)\\b(IF|ELSEIF|WHILE)\\b",
-			"foldingEndMarker": "(?i)\\b(END)\\b",
+			"foldingStartMarker": "\\b(IF|ELSEIF|WHILE)\\b",
+			"foldingEndMarker": "\\b(END)\\b",
 
 			"patterns": [{
 				"name": "keyword.control.pro",
-				"match": "(?i)\\b(IF|THEN|ELSE|ELSEIF|END|WHILE|FOR|DO)\\b"
+				"match": "\\b(IF|THEN|ELSE|ELSEIF|END|WHILE|FOR|DO)\\b"
 			}]
 		},
 		"strings": {
@@ -62,7 +62,7 @@
 			"patterns": [
 				{
 					"name": "constant.character",
-					"match": "(?i)(?<![\\w-])(RESULT)"
+					"match": "(?i)(?<![\\w-])(RESULT(?![\\w+])"
 				},
 				{
 					"name": "keyword.other.a",
@@ -74,87 +74,87 @@
 				},
 {
 					"name": "keyword.other.c",
-					"match": "(?i)(?<![\\w-])(CALENDAR-ENTRY|CALL-ACTION|CALL-MATHS|CASE|CATEGORY|CC|CDATE|CDH-REFRESHVIEW|CHR|CLEAR-GLOBAL-VARIABLES|CLOCK|CLOSE|CONFLICTCHECK|CONFLICTCHECKSTORE|CONTAINS|COPY-FILE|CORRESPONDENT|COST CATEGORY|COST CODE|COST UNITS|CREATE|CREATECASEVIEW|CURRENT)"
+					"match": "(?i)(?<![\\w-])(CALENDAR-ENTRY|CALL-ACTION|CALL-MATHS|CASE|CATEGORY|CC|CDATE|CDH-REFRESHVIEW|CHR|CLEAR-GLOBAL-VARIABLES|CLOCK|CLOSE|CONFLICTCHECK|CONFLICTCHECKSTORE|CONTAINS|COPY-FILE|CORRESPONDENT|COST CATEGORY|COST CODE|COST UNITS|CREATE|CREATECASEVIEW|CURRENT(?![\\w+])"
 				},
 {
 					"name": "keyword.other.d",
-					"match": "(?i)(?<![\\w-])(DATE|DATE-FROM-TODAY|DAY|DAYS|DAYS-FROM-TODAY|DEBUG|DELETE DIARIES|DELETE-FILE|DETAIL|DIARY AN ACTION|DIARY AT|DIARY DETAIL|DIARY FOR|DIARY TO|DICTATED|DMS-COPY|DMS-DELETE|DO|DRAFT)"
+					"match": "(?i)(?<![\\w-])(DATE|DATE-FROM-TODAY|DAY|DAYS|DAYS-FROM-TODAY|DEBUG|DELETE DIARIES|DELETE-FILE|DETAIL|DIARY AN ACTION|DIARY AT|DIARY DETAIL|DIARY FOR|DIARY TO|DICTATED|DMS-COPY|DMS-DELETE|DO|DRAFT(?![\\w+])"
 				},
 {
 					"name": "keyword.other.e",
-					"match": "(?i)(?<![\\w-])(EDIT|EMAIL-ADDRESS|EXEC-SP|EXPORT|EXQUERY|EXSELECT|EXSQL|EXTERNAL-APPLICATION|EXVIEW)"
+					"match": "(?i)(?<![\\w-])(EDIT|EMAIL-ADDRESS|EXEC-SP|EXPORT|EXQUERY|EXSELECT|EXSQL|EXTERNAL-APPLICATION|EXVIEW(?![\\w+])"
 				},
 {
 					"name": "keyword.other.f",
-					"match": "(?i)(?<![\\w-])(FAX#|FETCH|FETCHCLOSE|FETCHDATA|FETCHERRORMSG|FETCHFIRST|FETCHLAST|FETCHNEXT|FETCHPREV|FETCHQUERY|FETCHRECORDAVAIL|FILE|FILE-SIZE|FIND-CASE|FROMBASE64|FROMHEX)"
+					"match": "(?i)(?<![\\w-])(FAX#|FETCH|FETCHCLOSE|FETCHDATA|FETCHERRORMSG|FETCHFIRST|FETCHLAST|FETCHNEXT|FETCHPREV|FETCHQUERY|FETCHRECORDAVAIL|FILE|FILE-SIZE|FIND-CASE|FROMBASE64|FROMHEX(?![\\w+])"
 				},
 {
 					"name": "keyword.other.g",
-					"match": "(?i)(?<![\\w-])(GE|GETDATA|GLOBAL-VARIABLE|GT|GUID)"
+					"match": "(?i)(?<![\\w-])(GE|GETDATA|GLOBAL-VARIABLE|GT|GUID(?![\\w+])"
 				},
 {
 					"name": "keyword.other.h",
-					"match": "(?i)(?<![\\w-])(HMAC|HOURS|HTTPSERVICE)"
+					"match": "(?i)(?<![\\w-])(HMAC|HOURS|HTTPSERVICE(?![\\w+])"
 				},
 {
 					"name": "keyword.other.i",
-					"match": "(?i)(?<![\\w-])(IMPORT|INCOMING MAIL|INSERT|INTEREST)"
+					"match": "(?i)(?<![\\w-])(IMPORT|INCOMING MAIL|INSERT|INTEREST(?![\\w+])"
 				},
 {
 					"name": "keyword.other.l",
-					"match": "(?i)(?<![\\w-])(LE|LENGTH|LINKED ACTION|LISTFIND|LISTITEM|LISTSIZE|LISTZIP|LT)"
+					"match": "(?i)(?<![\\w-])(LE|LENGTH|LINKED ACTION|LISTFIND|LISTITEM|LISTSIZE|LISTZIP|LT(?![\\w+])"
 				},
 {
 					"name": "keyword.other.m",
-					"match": "(?i)(?<![\\w-])(MAKE CALL|MD5-DIGEST|MESSAGE|MINUTES|MOD|MOD|MODULO|MODULO|MONTH)"
+					"match": "(?i)(?<![\\w-])(MAKE CALL|MD5-DIGEST|MESSAGE|MINUTES|MOD|MOD|MODULO|MODULO|MONTH(?![\\w+])"
 				},
 {
 					"name": "keyword.other.n",
-					"match": "(?i)(?<![\\w-])(NEXT|NO-REDISPLAY|NOT|NOT=|NO-UPDATE)"
+					"match": "(?i)(?<![\\w-])(NEXT|NO-REDISPLAY|NOT|NOT=|NO-UPDATE(?![\\w+])"
 				},
 {
 					"name": "keyword.other.o",
-					"match": "(?i)(?<![\\w-])(ON|OPEN|OPTIONS|OR|OSGETENV)"
+					"match": "(?i)(?<![\\w-])(ON|OPEN|OPTIONS|OR|OSGETENV(?![\\w+])"
 				},
 {
 					"name": "keyword.other.p",
-					"match": "(?i)(?<![\\w-])(PDFBAR|POSTING|PRINT|PUSHNOTIFICATION|PUT|PUTACCOUNTS|PUTDATA)"
+					"match": "(?i)(?<![\\w-])(PDFBAR|POSTING|PRINT|PUSHNOTIFICATION|PUT|PUTACCOUNTS|PUTDATA(?![\\w+])"
 				},
 {
 					"name": "keyword.other.q",
-					"match": "(?i)(?<![\\w-])(QUESTION)"
+					"match": "(?i)(?<![\\w-])(QUESTION(?![\\w+])"
 				},
 {
 					"name": "keyword.other.r",
-					"match": "(?i)(?<![\\w-])(RANDOM|RANGE|RENAME-FILE|RESTSERVICE|REVERT|ROUND)"
+					"match": "(?i)(?<![\\w-])(RANDOM|RANGE|RENAME-FILE|RESTSERVICE|REVERT|ROUND(?![\\w+])"
 				},
 {
 					"name": "keyword.other.s",
-					"match": "(?i)(?<![\\w-])(SCREEN|SECURE|SELECT PRINTER|SEND ECONOMIC_DOCUMENT|SEND E-MAIL|SEND FAX|SEND LETTER|SEND MEMO|SEND SMS|SET-GLOBAL-VARIABLE|SET-VALUE|SHA1-DIGEST|SLIP|SPLIT|SQL|SQLFIRST|SQLLAST|SQLNEXT|SQLPREV|STATUS|SUBJECT)"
+					"match": "(?i)(?<![\\w-])(SCREEN|SECURE|SELECT PRINTER|SEND ECONOMIC_DOCUMENT|SEND E-MAIL|SEND FAX|SEND LETTER|SEND MEMO|SEND SMS|SET-GLOBAL-VARIABLE|SET-VALUE|SHA1-DIGEST|SLIP|SPLIT|SQL|SQLFIRST|SQLLAST|SQLNEXT|SQLPREV|STATUS|SUBJECT(?![\\w+])"
 				},
 {
 					"name": "keyword.other.t",
-					"match": "(?i)(?<![\\w-])(TABLEAMEND|TABLECANCEL|TABLECLEAR|TABLECOPY|TABLECOUNT|TABLECREATE|TABLEDELETE|TABLEFIRST|TABLEGETCURRENT|TABLELAST|TABLENEXT|TABLEPREVIOUS|TABLEREFRESHALL|TABLEREFRESHCURRENT|TABLEREFRESHSELECTED|TABLERESET|TABLESAVE|TABLESELECT|TABLESELECTCOUNT|TABLESETCURRENT|TABLETRUECOUNT|TAKE CALL|TEMPLATE|TEXT|TFSATTACH|TFSCREATE|TFSGETURL|TFSLINK|TFSUPDATE|TIME|TIME-SECONDS|TO|TOBASE64|TODAY|TOHEX)"
+					"match": "(?i)(?<![\\w-])(TABLEAMEND|TABLECANCEL|TABLECLEAR|TABLECOPY|TABLECOUNT|TABLECREATE|TABLEDELETE|TABLEFIRST|TABLEGETCURRENT|TABLELAST|TABLENEXT|TABLEPREVIOUS|TABLEREFRESHALL|TABLEREFRESHCURRENT|TABLEREFRESHSELECTED|TABLERESET|TABLESAVE|TABLESELECT|TABLESELECTCOUNT|TABLESETCURRENT|TABLETRUECOUNT|TAKE CALL|TEMPLATE|TEXT|TFSATTACH|TFSCREATE|TFSGETURL|TFSLINK|TFSUPDATE|TIME|TIME-SECONDS|TO|TOBASE64|TODAY|TOHEX(?![\\w+])"
 				},
 {
 					"name": "keyword.other.u",
-					"match": "(?i)(?<![\\w-])(UNSECURE|UNZIP|UPDATE|UPDATE FORM|USERGROUP|USERNAME|USER-PROFILE|UTCTIME)"
+					"match": "(?i)(?<![\\w-])(UNSECURE|UNZIP|UPDATE|UPDATE FORM|USERGROUP|USERNAME|USER-PROFILE|UTCTIME(?![\\w+])"
 				},
 {
 					"name": "keyword.other.w",
-					"match": "(?i)(?<![\\w-])(WEBFIRST|WEBLAST|WEBNEXT|WEBPREV|WEBSERVICE|WEEKDAY|WHERE|WITH TEMPLATE)"
+					"match": "(?i)(?<![\\w-])(WEBFIRST|WEBLAST|WEBNEXT|WEBPREV|WEBSERVICE|WEEKDAY|WHERE|WITH TEMPLATE(?![\\w+])"
 				},
 {
 					"name": "keyword.other.y",
-					"match": "(?i)(?<![\\w-])(YEAR)"
+					"match": "(?i)(?<![\\w-])(YEAR(?![\\w+])"
 				},
 {
 					"name": "keyword.other.z",
-					"match": "(?i)(?<![\\w-])(ZIP)"
+					"match": "(?i)(?<![\\w-])(ZIP(?![\\w+])"
 				},
 				{
 					"name": "keyword.other.patterns",
-					"match": "(?i)(?<![\\w-])((IF|THEN|ELSE|ELSEIF|END|WHILE|FOR|DO))"
+					"match": "(?i)(?<![\\w-])((IF|THEN|ELSE|ELSEIF|END|WHILE|FOR|DO)(?![\\w+])"
 				}
 			]
 
