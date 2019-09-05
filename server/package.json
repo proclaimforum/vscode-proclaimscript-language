@@ -13,10 +13,7 @@
 	},
 	"dependencies": {
 		"vscode-languageserver": "^5.2.1"
-		
 	},
-	"devDependencies": {
-		
-	},
+	"devDependencies": {},
 	"scripts": {}
 }
