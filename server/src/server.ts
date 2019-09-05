@@ -4,7 +4,6 @@
  * ------------------------------------------------------------------------------------------ */
 import {
 	createConnection,
-<<<<<<< HEAD
 
 	Diagnostic,
 	DiagnosticSeverity,
@@ -66,40 +65,14 @@ import * as path from 'path';
 import * as grammar from './pro.tmLanguage.json';
 
 
-=======
-	TextDocuments,
-	TextDocument,
-	Diagnostic,
-	DiagnosticSeverity,
-	ProposedFeatures,
-	InitializeParams,
-	DidChangeConfigurationNotification,
-	CompletionItem,
-	CompletionItemKind,
-	TextDocumentPositionParams,
-	
-	DocumentSymbolParams,
-	SymbolInformation,
-	SymbolKind,
-	
-	Range
-	
-
-
-} from 'vscode-languageserver';
-//import * as utils from './utils';
->>>>>>> master
 
 //import * as vscode from 'vscode-languageserver';
 
 import { ParseDocument, ParseItem, MySymbol } from './parser';
-<<<<<<< HEAD
 //import {onExecuteCommand} from './commands';
 import { connect } from 'http2';
 import { isWindows } from './utils.js';
 import { WorkspaceFoldersFeature } from 'vscode-languageserver/lib/workspaceFolders';
-=======
->>>>>>> master
 
 // Create a connection for the server. The connection uses Node's IPC as a transport.
 // Also include all preview / proposed LSP features.
@@ -133,7 +106,6 @@ connection.onInitialize((params: InitializeParams) => {
 	return {
 		capabilities: {
 			textDocumentSync: documents.syncKind,
-<<<<<<< HEAD
 
 			// code action - only way to return a command with a link to doc?
 			codeActionProvider: true,
@@ -151,16 +123,6 @@ connection.onInitialize((params: InitializeParams) => {
 				"commands": ["checkSyntax"]
 			}
 
-=======
-			// Tell the client that the server supports code completion
-			completionProvider: {
-
-				resolveProvider: true
-				
-			},
-			// Tell the client that the server supports document Symbols
-			documentSymbolProvider: true
->>>>>>> master
 		}
 	};
 });
@@ -180,33 +142,23 @@ connection.onInitialized(() => {
 // The example settings
 interface ExampleSettings {
 	maxNumberOfProblems: number;
-<<<<<<< HEAD
 	enableSyntaxCheckTab: boolean;
 	enableSyntaxCheckCodeAction: boolean;
-=======
->>>>>>> master
 }
 
 // The global settings, used when the `workspace/configuration` request is not supported by the client.
 // Please note that this is not the case when using this server with the client provided in this example
 // but could happen with other clients.
-<<<<<<< HEAD
 const defaultSettings: ExampleSettings = { maxNumberOfProblems: 1000, enableSyntaxCheckTab: true, enableSyntaxCheckCodeAction: false };
-=======
-const defaultSettings: ExampleSettings = { maxNumberOfProblems: 1000 };
->>>>>>> master
 let globalSettings: ExampleSettings = defaultSettings;
 
 // Cache the settings of all open documents
 let documentSettings: Map<string, Thenable<ExampleSettings>> = new Map();
 
-<<<<<<< HEAD
 
 
 
 
-=======
->>>>>>> master
 connection.onDidChangeConfiguration(change => {
 	if (hasConfigurationCapability) {
 		// Reset all cached document settings
@@ -247,7 +199,6 @@ documents.onDidChangeContent(change => {
 
 	//DISABLED but left code in for reference.
 	//validateTextDocument(change.document);
-<<<<<<< HEAD
 	checkDocumentSyntax(change.document);
 });
 
@@ -271,10 +222,6 @@ async function checkDocumentSyntax(textDocument: TextDocument): Promise<void> {
 	}
 }
 
-=======
-});
-
->>>>>>> master
 async function validateTextDocument(textDocument: TextDocument): Promise<void> {
 	// In this simple example we get the settings for every validate run.
 	let settings = await getDocumentSettings(textDocument.uri);
@@ -324,11 +271,7 @@ async function validateTextDocument(textDocument: TextDocument): Promise<void> {
 
 connection.onDidChangeWatchedFiles(_change => {
 	// Monitored files have change in VSCode
-<<<<<<< HEAD
 	console.log('We received an file change event');
-=======
-	connection.console.log('We received an file change event');
->>>>>>> master
 });
 
 // This handler provides the initial list of the completion items.
@@ -367,7 +310,6 @@ connection.onCompletionResolve(
 	}
 );
 
-<<<<<<< HEAD
 connection.onCodeAction((codeActionParams: CodeActionParams): CodeAction[] => {
 	//all this is a bodge to get the uri through to the calling command, so we can parse symbols and presend dialog box server-side
 
@@ -391,11 +333,6 @@ connection.onCodeAction((codeActionParams: CodeActionParams): CodeAction[] => {
 });
 
 connection.onDocumentSymbol(onDocumentSymbol);
-=======
-
-connection.onDocumentSymbol(onDocumentSymbol);
-
->>>>>>> master
 //change to async then promise.resolve
 function onDocumentSymbol(documentSymbol: DocumentSymbolParams): SymbolInformation[] {
 	console.log('Server.onDocumentSymbol', documentSymbol);
@@ -404,21 +341,11 @@ function onDocumentSymbol(documentSymbol: DocumentSymbolParams): SymbolInformati
 	// Create an SymbolInformation[] Object to pass as result
 	const symbolInformationResult: SymbolInformation[] = [];
 
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> master
 	// Form local variables for changed doc uri (preliminary code is for DocumentSymbol not workspace-wide)
 	const uri = documentSymbol.textDocument.uri;
 	const thisdoc = documents.get(uri);
 
-<<<<<<< HEAD
 	//create headings/containers for outline... not yet working...
-=======
-	//create headings/containers for outline... not yet working...slow
->>>>>>> master
 	/*
 	const wholedoc = Range.create(0, 0, thisdoc.lineCount, Number.MAX_VALUE);
 	var headingSymbolString = SymbolInformation.create('STRINGS:',SymbolKind.String,wholedoc,uri);
@@ -429,7 +356,6 @@ function onDocumentSymbol(documentSymbol: DocumentSymbolParams): SymbolInformati
 	*/
 
 	// Retrieve list of symbols by passing document to parser
-<<<<<<< HEAD
 	// ParseItem is (name,symbolKind and Line), but not Range. Extended by MySymbol to include start and end char pos in line
 	// pass it also our grammar json to identify keyworkds
 	const symbols: MySymbol[] = ParseDocument(thisdoc, grammar);
@@ -437,30 +363,14 @@ function onDocumentSymbol(documentSymbol: DocumentSymbolParams): SymbolInformati
 	//for each symbok, construct a SymbolInformation Object, and push to result array
 	for (const symbol of symbols) {
 
-=======
-	// ParseItem is (name,symbolKind and Line), but not Range
-	const symbols: MySymbol[] = ParseDocument(thisdoc);
-	
-
-	//for each symbok, construct a SymbolInformation Object, and push to result array
-	for (const symbol of symbols) {
-		
->>>>>>> master
 		// What is the document range that covers this symbol? 
 		// this is the character range of the whole line, rather than just the symbol start and end
 		const symbolRange = Range.create(symbol.parseItem.line, symbol.start, symbol.parseItem.line, symbol.end);
 
 		// Construct symbolInformation Object
-<<<<<<< HEAD
 		const symbolInformation = SymbolInformation.create(symbol.parseItem.name, symbol.parseItem.type, symbolRange, uri, symbol.parseItem.container);
 		//var conName = symbolInformation.containerName;
 
-=======
-		// TODO: Expand with container name for nesting DB fields, Variables, Strings, keywords?
-		// EG create a dummy symbol as a container for each symbolKind, then nest each symbolKind as child node 
-		const symbolInformation = SymbolInformation.create(symbol.parseItem.name, symbol.parseItem.type, symbolRange,uri,symbol.parseItem.container);
-		var conName = symbolInformation.containerName;
->>>>>>> master
 		// Finally, push the symbol to output array
 		symbolInformationResult.push(symbolInformation);
 	}
@@ -490,7 +400,6 @@ connection.onDidCloseTextDocument((params) => {
 
 // Make the text document manager listen on the connection
 // for open, change and close text document events
-<<<<<<< HEAD
 
 
 connection.onExecuteCommand(onExecuteCommand);
@@ -605,8 +514,6 @@ async function onExecuteCommand(params: ExecuteCommandParams, pToken: Cancellati
 
 
 
-=======
->>>>>>> master
 documents.listen(connection);
 
 // Listen on the connection
