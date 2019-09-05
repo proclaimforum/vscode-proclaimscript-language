@@ -34,3 +34,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
  -- see package configuration options: enableSyntaxCheckTab and enableSyntaxCheckCodeAction
  ### Fixed
  - variable name symbols where keyword formed part of the symbol (in both client tmLanguage and parser)
+
+## [0.2.2] - 2019-05-09
+### Fixed
+- minor language definition errors
