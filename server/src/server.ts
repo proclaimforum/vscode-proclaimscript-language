@@ -64,7 +64,7 @@ import * as path from 'path';
 //grab array of keywords here. can we get this from the client?
 import * as grammar from './pro.tmLanguage.json';
 
-
+import Uri from 'vscode-uri';
 
 //import * as vscode from 'vscode-languageserver';
 
@@ -471,7 +471,9 @@ async function onExecuteCommand(params: ExecuteCommandParams, pToken: Cancellati
 			//let workspaceChange = new WorkspaceChange();
 
 			//uri of new file
-			let newuri = 'file:///c:/temp/syntaxcheck.txt';
+			let currentPath :string = (thisdoc.uri).substr(0,thisdoc.uri.lastIndexOf('/'));
+			
+			let newuri = currentPath+'/syntaxcheck.txt';
 
 			//construct a CreateFile variable
 			let createFile: CreateFile = { kind: 'create', uri: newuri };
