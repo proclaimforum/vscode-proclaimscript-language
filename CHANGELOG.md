@@ -38,3 +38,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ## [0.2.2] - 2019-05-09
 ### Fixed
 - minor language definition errors
+
+## [0.2.3] - 2019-05-09
+### Fixed
+- minor language definition errors
