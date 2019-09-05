@@ -42,3 +42,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ## [0.2.3] - 2019-05-09
 ### Fixed
 - minor language definition errors
+
+## [0.2.4] - 2019-05-09
+### Fixed
+- change syntaxcheck.txt to save to current workspace folder of .pro file
