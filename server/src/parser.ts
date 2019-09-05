@@ -6,15 +6,22 @@ const PARSE_DBFIELD = 2;
 const PARSE_STRING = 3;
 
 //export function ParseDocument(document: vscode.TextDocument, token: vscode.CancellationToken): ParseItem[] {
+<<<<<<< HEAD
 export function ParseDocument(document: vscode.TextDocument, grammar: any): MySymbol[] {
+=======
+export function ParseDocument(document: vscode.TextDocument): MySymbol[] {
+>>>>>>> master
 	// this stores all the symbols we create
 
 	// TODO: don't need to go via ParseItem any longer.. 
 	//const symbols: ParseItem[] = [];
 <<<<<<< HEAD
+<<<<<<< HEAD
 	//console.log(grammar.repository.keywords.patterns);
 =======
 >>>>>>> begin variable Symbol detection
+=======
+>>>>>>> master
 
 	// Make an array of Items (strings, DB fields) and their positions
 	// that should be checked to see if new (eg) variable is inside or not
@@ -25,6 +32,7 @@ export function ParseDocument(document: vscode.TextDocument, grammar: any): MySy
 
 	// Parse the document, line by line
 	for (let i = 0; i < document.lineCount; i++) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 
@@ -48,6 +56,17 @@ export function ParseDocument(document: vscode.TextDocument, grammar: any): MySy
 		/////////////////////////
 =======
 >>>>>>> begin variable Symbol detection
+=======
+
+		let oneLine = document.getText(vscode.Range.create(i, -1, i, Number.MAX_VALUE));
+
+		// 1 - Exclude comment lines
+		if (oneLine[0] === '#') {
+			continue;
+		}
+
+		// 2 - find STRINGS. store start and end in mysms array for later
+>>>>>>> master
 		var oneString: [number, number] = findSymbol(oneLine, '"');
 		if ((oneString[0] !== -1 && oneString[1] !== -1)) {
 
@@ -57,6 +76,7 @@ export function ParseDocument(document: vscode.TextDocument, grammar: any): MySy
 			resultItem.line = i;
 			resultItem.container = "STRINGS:";
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 			// add on a start and end position to form a MySymbol
@@ -81,6 +101,10 @@ export function ParseDocument(document: vscode.TextDocument, grammar: any): MySy
 			// add on a start and end position to form a MySymbol
 			let oneSymbol: MySymbol = new MySymbol(resultItem, oneString[0], oneString[1]);
 >>>>>>> begin variable Symbol detection
+=======
+			// add on a start and end position to form a MySymbol
+			let oneSymbol: MySymbol = new MySymbol(resultItem, oneString[0], oneString[1]);
+>>>>>>> master
 
 			mySymbols.push(oneSymbol);
 		}
@@ -92,6 +116,7 @@ export function ParseDocument(document: vscode.TextDocument, grammar: any): MySy
 			// check if this is inside an existing symbol
 			var inside: boolean = false;
 <<<<<<< HEAD
+<<<<<<< HEAD
 			check: for (var symb of mysyms) {
 				if (symb.withinField(i,oneDB[0])) {
 >>>>>>> LSP implementation (#4)
@@ -99,11 +124,16 @@ export function ParseDocument(document: vscode.TextDocument, grammar: any): MySy
 			check: for (var symb of mySymbols) {
 				if (symb.withinField(i, oneDB[0])) {
 >>>>>>> begin variable Symbol detection
+=======
+			check: for (var symb of mySymbols) {
+				if (symb.withinField(i, oneDB[0])) {
+>>>>>>> master
 					inside = true;
 					break check;
 				}
 			}
 			if (!inside) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 				let symName: string = oneLine.substr(oneDB[0], oneDB[1] - oneDB[0] + 1);
@@ -197,6 +227,9 @@ export function ParseDocument(document: vscode.TextDocument, grammar: any): MySy
 =======
 				let symName: string = oneLine.substr(oneDB[0], oneDB[1] - oneDB[0] + 1);
 >>>>>>> begin variable Symbol detection
+=======
+				let symName: string = oneLine.substr(oneDB[0], oneDB[1] - oneDB[0] + 1);
+>>>>>>> master
 				let resultSymbol = new ParseItem(symName, vscode.SymbolKind.Field);
 				resultSymbol.line = i;
 				resultSymbol.container = "DB FIELDS:";
@@ -208,6 +241,7 @@ export function ParseDocument(document: vscode.TextDocument, grammar: any): MySy
 			}
 		}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> LSP implementation (#4)
 	}
@@ -237,6 +271,10 @@ export function ParseDocument(document: vscode.TextDocument, grammar: any): MySy
 // find start brace. find end brace - everything inbetween is classed as a DBfield
 // if we reach end of string before then item is not classed as field
 =======
+=======
+
+
+>>>>>>> master
 
 		var startofword: number = 0;
 		var pattern = /[\{\}\(\)\s\,]/g;
@@ -268,7 +306,10 @@ export function ParseDocument(document: vscode.TextDocument, grammar: any): MySy
 			startofword = pattern.lastIndex;
 		}
 
+<<<<<<< HEAD
 >>>>>>> begin variable Symbol detection
+=======
+>>>>>>> master
 
 
 
@@ -288,10 +329,13 @@ export function ParseDocument(document: vscode.TextDocument, grammar: any): MySy
 // find all other words by delim, if it's not a keyword, then it's a variable
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 // constants?
 >>>>>>> LSP implementation (#4)
 =======
 >>>>>>> begin variable Symbol detection
+=======
+>>>>>>> master
 
 
 // 3 - 
@@ -301,6 +345,7 @@ export function ParseDocument(document: vscode.TextDocument, grammar: any): MySy
 
 // if it's a keyword, ignore it
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 
@@ -321,6 +366,8 @@ function findSymbol(pLine: string, pDelimOpen: string, pDelimClose?: string): [n
 //if we are in string mode, check for string end
 =======
 >>>>>>> begin variable Symbol detection
+=======
+>>>>>>> master
 
 class oneWord {
 	public word: string;
@@ -333,11 +380,15 @@ class oneWord {
 
 function findSymbol(pLine: string, pDelimOpen: string, pDelimClose?: string): [number, number] {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	// returns start and end position of string in a line
 >>>>>>> LSP implementation (#4)
 =======
 	// returns start and end position of string in a line enclosed by delimiter(s)
 >>>>>>> begin variable Symbol detection
+=======
+	// returns start and end position of string in a line enclosed by delimiter(s)
+>>>>>>> master
 	let i: number = 0;
 	let nStart: number = -1;
 	let nEnd: number = -1;

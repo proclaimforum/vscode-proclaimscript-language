@@ -11,11 +11,15 @@ for Eclipse Proclaim Maths Script
 * IF THEN ELSE code folding and indentation
 * Snippets framework for example maths layouts
 <<<<<<< HEAD
+<<<<<<< HEAD
 * OUTLINE Symbol detection for DB fields, variables and strings
 * Basic Syntax Checking - list all DB fields, variables and strings (helpful in spotting typos)
 =======
 * Basic Outline Symbol detection
 >>>>>>> LSP implementation (#4)
+=======
+* Basic Outline Symbol detection
+>>>>>>> master
 
 ## Installation
 
@@ -61,6 +65,7 @@ First release 0.1.1 on 13/08/2019
 * more snippets for sample keywords, based on Example Maths from ProclaimForum.co.uk
 * Intellisense / autocomplete for inline help for keywords
 <<<<<<< HEAD
+<<<<<<< HEAD
 ~~* improve DocumentSymbol parsing to include variables.~~
 * 'Problems' LSP for e.g. mismatched braces
 ~~* create new Command to replicate the old 'syntax check' output that displays a summary of all DB fields, variables and strings.~~
@@ -68,11 +73,16 @@ First release 0.1.1 on 13/08/2019
 * autocapitalise keywords
 * remove remnants of example LSP framework
 =======
+=======
+>>>>>>> master
 * improve DocumentSymbol parsing to include variables.
 * 'Problems' LSP for usual syntax errors e.g. mismatched brackets
 * create new Command to replicate the old 'syntax check' output that displays a summary of all DB fields, variables and strings.
 * hook into live Proclaim system to syntax check DB field names
+<<<<<<< HEAD
 >>>>>>> LSP implementation (#4)
+=======
+>>>>>>> master
 
 
 ## Contributing
@@ -85,10 +95,14 @@ Pull requests welcomed
 * Indentation rules are defined in language-configuration.json
 * Snippets (sample code/Intellisense) are defined in snippets.json
 <<<<<<< HEAD
+<<<<<<< HEAD
 * Symbol parsing rules (for OUTLINE view and syntax check) are defined in  in server/src/parser.ts
 =======
 * Symbol parsing (for OUTLINE view) are defined in  in server/src/parser.ts
 >>>>>>> LSP implementation (#4)
+=======
+* Symbol parsing (for OUTLINE view) are defined in  in server/src/parser.ts
+>>>>>>> master
 * In Proclaim v3.4+, the definition of the built-in syntax highlighter (CodeJock Syntax Edit) is stored in ConfigEditor/Schemas/_Proclaim.schclass
 * To see how the extension has parsed a specific line/keywork, go View-->Command Palette.. Developer: Inspect TM Scopes
 * For contributing/making changes to the extension, instead of 'installing' the script into your extensions directory try running the extension in the VSCode Extension Development Host 

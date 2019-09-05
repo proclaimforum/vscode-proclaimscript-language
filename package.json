@@ -2,7 +2,11 @@
     "name": "proclaimscript",
     "displayName": "Proclaim Maths Script",
     "description": "Syntax highlighting for Eclipse Proclaim Maths script",
+<<<<<<< HEAD
     "version": "0.2.1",
+=======
+    "version": "0.1.4",
+>>>>>>> master
     "publisher": "BurnsideConsultingLtd",
     "repository": {
         "type": "git",
@@ -26,6 +30,7 @@
             "type": "object",
             "title": "Example configuration",
             "properties": {
+<<<<<<< HEAD
                 "languageServerExample.enableSyntaxCheckCodeAction": {
                     "type": "boolean",
                     "default": false,
@@ -36,6 +41,8 @@
                     "default": true,
                     "description": "Controls whether the \"syntaxcheck\" tab is enabled"
                 },
+=======
+>>>>>>> master
                 "languageServerExample.maxNumberOfProblems": {
                     "scope": "resource",
                     "type": "number",
@@ -55,12 +62,15 @@
                 }
             }
         },
+<<<<<<< HEAD
         "commands": [
             {
                 "command": "checkSyntax",
                 "title": "checkSyntax"
             }
         ],
+=======
+>>>>>>> master
         "languages": [
             {
                 "id": "pro",
@@ -119,5 +129,11 @@
         "merge-options": "^1.0.1",
         "rimraf": "^3.0.0"
     },
+<<<<<<< HEAD
     "dependencies": {}
+=======
+    "dependencies": {
+     
+    }
+>>>>>>> master
 }

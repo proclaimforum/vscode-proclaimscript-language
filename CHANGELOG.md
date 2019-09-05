@@ -21,6 +21,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ### Fixed
 - variable highlighting where variable name contained numeric or arithmetic symbol
 
+<<<<<<< HEAD
 ## [0.2.0] - 2019-01-09
 ### Added
 - merged branch LSP_TEST:
@@ -34,3 +35,11 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
  -- see package configuration options: enableSyntaxCheckTab and enableSyntaxCheckCodeAction
  ### Fixed
  - variable name symbols where keyword formed part of the symbol (in both client tmLanguage and parser)
+=======
+ ## [0.2.0] - 2019-01-09
+ ### Added
+ - merged branch LSP_TEST:
+ - migrated to LSP client/server model to allow future expansion
+ - Outline symbol detection of DB fields and strings (helps debug typos)
+ - webpack vsix for cleaner install
+>>>>>>> master

@@ -8,10 +8,17 @@
 		"outDir": "out",
 		"rootDir": "src",
 		//here
+<<<<<<< HEAD
 			"strictNullChecks": false,
 			"resolveJsonModule": true
+=======
+			"strictNullChecks": false
+>>>>>>> master
 	},
 	"include": ["src"],
 	"exclude": ["node_modules", ".vscode-test"]
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> master

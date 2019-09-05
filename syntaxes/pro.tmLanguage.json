@@ -62,6 +62,7 @@
 			"patterns": [
 				{
 					"name": "constant.character",
+<<<<<<< HEAD
 					"match": "(?i)(?<![\\w-])(RESULT)"
 				},
 				{
@@ -155,6 +156,97 @@
 				{
 					"name": "keyword.other.patterns",
 					"match": "(?i)(?<![\\w-])((IF|THEN|ELSE|ELSEIF|END|WHILE|FOR|DO))"
+=======
+					"match": "(?i)\\b(RESULT)\\b"
+				},
+				{
+					"name": "keyword.other.a",
+					"match": "(?i)\\b(ACCOUNTS-UPDATE|ACTION TYPE|ADREP|AFTER|AND|ARCHIVE|ASC|AT|AT|ATTACH)\\b"
+				},
+{
+					"name": "keyword.other.b",
+					"match": "(?i)\\b(BCC|BEGINS|BOOKMARKS)\\b"
+				},
+{
+					"name": "keyword.other.c",
+					"match": "(?i)\\b(CALENDAR-ENTRY|CALL-ACTION|CALL-MATHS|CASE|CATEGORY|CC|CDATE|CDH-REFRESHVIEW|CHR|CLEAR-GLOBAL-VARIABLES|CLOCK|CLOSE|CONFLICTCHECK|CONFLICTCHECKSTORE|CONTAINS|COPY-FILE|CORRESPONDENT|COST CATEGORY|COST CODE|COST UNITS|CREATE|CREATECASEVIEW|CURRENT)\\b"
+				},
+{
+					"name": "keyword.other.d",
+					"match": "(?i)\\b(DATE|DATE-FROM-TODAY|DAY|DAYS|DAYS-FROM-TODAY|DEBUG|DELETE DIARIES|DELETE-FILE|DETAIL|DIARY AN ACTION|DIARY AT|DIARY DETAIL|DIARY FOR|DIARY TO|DICTATED|DMS-COPY|DMS-DELETE|DO|DRAFT)\\b"
+				},
+{
+					"name": "keyword.other.e",
+					"match": "(?i)\\b(EDIT|EMAIL-ADDRESS|EXEC-SP|EXPORT|EXQUERY|EXSELECT|EXSQL|EXTERNAL-APPLICATION|EXVIEW)\\b"
+				},
+{
+					"name": "keyword.other.f",
+					"match": "(?i)\\b(FAX#|FETCH|FETCHCLOSE|FETCHDATA|FETCHERRORMSG|FETCHFIRST|FETCHLAST|FETCHNEXT|FETCHPREV|FETCHQUERY|FETCHRECORDAVAIL|FILE|FILE-SIZE|FIND-CASE|FROMBASE64|FROMHEX)\\b"
+				},
+{
+					"name": "keyword.other.g",
+					"match": "(?i)\\b(GE|GETDATA|GLOBAL-VARIABLE|GT|GUID)\\b"
+				},
+{
+					"name": "keyword.other.h",
+					"match": "(?i)\\b(HMAC|HOURS|HTTPSERVICE)\\b"
+				},
+{
+					"name": "keyword.other.i",
+					"match": "(?i)\\b(IMPORT|INCOMING MAIL|INSERT|INTEREST)\\b"
+				},
+{
+					"name": "keyword.other.l",
+					"match": "(?i)\\b(LE|LENGTH|LINKED ACTION|LISTFIND|LISTITEM|LISTSIZE|LISTZIP|LT)\\b"
+				},
+{
+					"name": "keyword.other.m",
+					"match": "(?i)\\b(MAKE CALL|MD5-DIGEST|MESSAGE|MINUTES|MOD|MOD|MODULO|MODULO|MONTH)\\b"
+				},
+{
+					"name": "keyword.other.n",
+					"match": "(?i)\\b(NEXT|NO-REDISPLAY|NOT|NOT=|NO-UPDATE)\\b"
+				},
+{
+					"name": "keyword.other.o",
+					"match": "(?i)\\b(ON|OPEN|OPTIONS|OR|OSGETENV)\\b"
+				},
+{
+					"name": "keyword.other.p",
+					"match": "(?i)\\b(PDFBAR|POSTING|PRINT|PUSHNOTIFICATION|PUT|PUTACCOUNTS|PUTDATA)\\b"
+				},
+{
+					"name": "keyword.other.q",
+					"match": "(?i)\\b(QUESTION)\\b"
+				},
+{
+					"name": "keyword.other.r",
+					"match": "(?i)\\b(RANDOM|RANGE|RENAME-FILE|RESTSERVICE|REVERT|ROUND)\\b"
+				},
+{
+					"name": "keyword.other.s",
+					"match": "(?i)\\b(SCREEN|SECURE|SELECT PRINTER|SEND ECONOMIC_DOCUMENT|SEND E-MAIL|SEND FAX|SEND LETTER|SEND MEMO|SEND SMS|SET-GLOBAL-VARIABLE|SET-VALUE|SHA1-DIGEST|SLIP|SPLIT|SQL|SQLFIRST|SQLLAST|SQLNEXT|SQLPREV|STATUS|SUBJECT)\\b"
+				},
+{
+					"name": "keyword.other.t",
+					"match": "(?i)\\b(TABLEAMEND|TABLECANCEL|TABLECLEAR|TABLECOPY|TABLECOUNT|TABLECREATE|TABLEDELETE|TABLEFIRST|TABLEGETCURRENT|TABLELAST|TABLENEXT|TABLEPREVIOUS|TABLEREFRESHALL|TABLEREFRESHCURRENT|TABLEREFRESHSELECTED|TABLERESET|TABLESAVE|TABLESELECT|TABLESELECTCOUNT|TABLESETCURRENT|TABLETRUECOUNT|TAKE CALL|TEMPLATE|TEXT|TFSATTACH|TFSCREATE|TFSGETURL|TFSLINK|TFSUPDATE|TIME|TIME-SECONDS|TO|TOBASE64|TODAY|TOHEX)\\b"
+				},
+{
+					"name": "keyword.other.u",
+					"match": "(?i)\\b(UNSECURE|UNZIP|UPDATE|UPDATE FORM|USERGROUP|USERNAME|USER-PROFILE|UTCTIME)\\b"
+				},
+{
+					"name": "keyword.other.w",
+					"match": "(?i)\\b(WEBFIRST|WEBLAST|WEBNEXT|WEBPREV|WEBSERVICE|WEEKDAY|WHERE|WITH TEMPLATE)\\b"
+				},
+{
+					"name": "keyword.other.y",
+					"match": "(?i)\\b(YEAR)\\b"
+				},
+{
+					"name": "keyword.other.z",
+					"match": "(?i)\\b(ZIP)\\b"
+>>>>>>> master
 				}
 			]
 
