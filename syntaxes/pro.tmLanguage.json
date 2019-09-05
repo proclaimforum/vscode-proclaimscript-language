@@ -154,7 +154,7 @@
 				},
 				{
 					"name": "keyword.other.patterns",
-					"match": "(?i)(?<![\\w-])((IF|THEN|ELSE|ELSEIF|END|WHILE|FOR|DO)(?![\\w+])"
+					"match": "(?i)(?<![\\w-])(IF|THEN|ELSE|ELSEIF|END|WHILE|FOR|DO)(?![\\w+])"
 				}
 			]
 
