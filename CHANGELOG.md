@@ -21,9 +21,16 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ### Fixed
 - variable highlighting where variable name contained numeric or arithmetic symbol
 
- ## [0.2.0] - 2019-01-09
- ### Added
- - merged branch LSP_TEST:
- - migrated to LSP client/server model to allow future expansion
- - Outline symbol detection of DB fields and strings (helps debug typos)
- - webpack vsix for cleaner install
+## [0.2.0] - 2019-01-09
+### Added
+- merged branch LSP_TEST:
+- migrated to LSP client/server model to allow future expansion
+- Outline symbol detection of DB fields and strings (helps debug typos)
+- webpack vsix for cleaner install
+
+## [0.2.1] - 2019-05-09
+### Added
+ - syntax check list of variables, DB fields and strings, outputs to tab or QuickFix
+ -- see package configuration options: enableSyntaxCheckTab and enableSyntaxCheckCodeAction
+ ### Fixed
+ - variable name symbols where keyword formed part of the symbol (in both client tmLanguage and parser)

@@ -2,7 +2,7 @@
     "name": "proclaimscript",
     "displayName": "Proclaim Maths Script",
     "description": "Syntax highlighting for Eclipse Proclaim Maths script",
-    "version": "0.1.4",
+    "version": "0.2.1",
     "publisher": "BurnsideConsultingLtd",
     "repository": {
         "type": "git",
@@ -26,6 +26,16 @@
             "type": "object",
             "title": "Example configuration",
             "properties": {
+                "languageServerExample.enableSyntaxCheckCodeAction": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Controls whether the syntax check can be run from inline Quick Fix"
+                },
+                "languageServerExample.enableSyntaxCheckTab": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Controls whether the \"syntaxcheck\" tab is enabled"
+                },
                 "languageServerExample.maxNumberOfProblems": {
                     "scope": "resource",
                     "type": "number",
@@ -45,6 +55,12 @@
                 }
             }
         },
+        "commands": [
+            {
+                "command": "checkSyntax",
+                "title": "checkSyntax"
+            }
+        ],
         "languages": [
             {
                 "id": "pro",
@@ -65,6 +81,15 @@
                 "path": "./syntaxes/pro.tmLanguage.json"
             }
         ],
+        "views": {
+            "explorer": [
+                {
+                    "id": "openhabItems",
+                    "name": "openHAB Items",
+                    "when": "resourceLangId == pro"
+                }
+            ]
+        },
         "snippets": [
             {
                 "language": "pro",
@@ -94,7 +119,5 @@
         "merge-options": "^1.0.1",
         "rimraf": "^3.0.0"
     },
-    "dependencies": {
-     
-    }
+    "dependencies": {}
 }
