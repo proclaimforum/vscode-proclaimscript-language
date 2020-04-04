@@ -101,6 +101,10 @@
 					"match": "(?i)(?<![\\w-])(IMPORT|INCOMING MAIL|INSERT|INTEREST)(?![\\w+])"
 				},
 {
+					"name": "keyword.other.j",
+					"match": "(?i)(?<![\\w-])(JSON-ARRAY|JSON-ARRAY-FIRST|JSON-ARRAY-GET-COUNT|JSON-ARRAY-GET-PROPERTY|JSON-ARRAY-INDEX|JSON-ARRAY-NEXT|JSON-ARRAY-LAST|JSON-ARRAY-PREV|JSON-GET-NAMES|JSON-GET-PROPERTY|JSON-GET-PROPERTY-TYPE|JSON-OBJECT|JSON-OBJECT-FROMFILE)(?![\\w+])"
+				},
+{
 					"name": "keyword.other.l",
 					"match": "(?i)(?<![\\w-])(LE|LENGTH|LINKED ACTION|LISTFIND|LISTITEM|LISTSIZE|LISTZIP|LT)(?![\\w+])"
 				},
