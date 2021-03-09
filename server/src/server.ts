@@ -77,7 +77,7 @@ import { WorkspaceFoldersFeature } from 'vscode-languageserver/lib/workspaceFold
 // Create a connection for the server. The connection uses Node's IPC as a transport.
 // Also include all preview / proposed LSP features.
 let connection = createConnection(ProposedFeatures.all);
-
+let docVer = 1;
 // Create a simple text document manager. The text document manager
 // supports full document sync only
 let documents: TextDocuments = new TextDocuments();
@@ -85,6 +85,8 @@ let documents: TextDocuments = new TextDocuments();
 let hasConfigurationCapability: boolean = false;
 let hasWorkspaceFolderCapability: boolean = false;
 let hasDiagnosticRelatedInformationCapability: boolean = false;
+
+
 
 connection.onInitialize((params: InitializeParams) => {
 	let capabilities = params.capabilities;
@@ -102,7 +104,9 @@ connection.onInitialize((params: InitializeParams) => {
 		capabilities.textDocument.publishDiagnostics &&
 		capabilities.textDocument.publishDiagnostics.relatedInformation
 	);
-
+	
+	capabilities.workspace.workspaceEdit.documentChanges = true;
+	
 	return {
 		capabilities: {
 			textDocumentSync: documents.syncKind,
@@ -219,6 +223,7 @@ async function checkDocumentSyntax(textDocument: TextDocument): Promise<void> {
 			var execute: ExecuteCommandParams = { command: "checkSyntax", arguments: args };
 			var token: CancellationToken;
 			onExecuteCommand(execute, token);
+			console.log("checkDocumentSyntax complete");
 		}
 	}
 }
@@ -408,6 +413,7 @@ async function onExecuteCommand(params: ExecuteCommandParams, pToken: Cancellati
 	console.log("run command");
 	switch (params.command) {
 		case "checkSyntax":
+			console.log("..check syntax");
 			// we have passed the doc URI in the ExecuteCommandParams as an argument.
 			// (this seems to have to come via a CodeAction rather than a plain UI ExecuteCommand in order that
 			// the UI can pass the document url )
@@ -486,7 +492,8 @@ async function onExecuteCommand(params: ExecuteCommandParams, pToken: Cancellati
 			var workspaceEdit: WorkspaceEdit = { documentChanges: createFiles };
 
 			//pass to client to apply this edit
-			await connection.workspace.applyEdit(workspaceEdit);
+			console.log ("Applying createFile workspaceEdit");
+			await connection.workspace.applyEdit(workspaceEdit).then((value) => console.log(value));
 
 
 			//To insert the text (and pop up the window), create array of TextEdit
@@ -499,7 +506,10 @@ async function onExecuteCommand(params: ExecuteCommandParams, pToken: Cancellati
 			textEdit.push(textEdits);
 
 			//make a new array of textDocumentEdits, containing our TextEdit (range and text)
-			let textDocumentEdit = TextDocumentEdit.create({ uri: newuri, version: 1 }, textEdit);
+			console.log ("pushing to " + newuri);
+			let textDocumentEdit = TextDocumentEdit.create({ uri: newuri, version: docVer }, textEdit);
+			docVer++;
+			
 			let textDocumentEdits: TextDocumentEdit[] = [];
 			textDocumentEdits.push(textDocumentEdit);
 
@@ -508,14 +518,12 @@ async function onExecuteCommand(params: ExecuteCommandParams, pToken: Cancellati
 
 			//and finally apply this to our workspace.
 			// we can probably do this some more elegant way / in
-			connection.workspace.applyEdit(workspaceEdit);
-
+			console.log ("Applying TextDocumentEdit workspaceEdit:")
+			connection.workspace.applyEdit(workspaceEdit).then((value) => console.log(value));
+			
 			break;
 	}
 }
-
-
-
 
 documents.listen(connection);
 
